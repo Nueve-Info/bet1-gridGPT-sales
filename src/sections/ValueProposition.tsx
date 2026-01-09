@@ -1,68 +1,60 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { valueProposition } from "@/content/landing";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
+import { useEffect, useState } from "react";
+
+// Karty w formie stosu zgodnie z wireframe
+// Usunięto statyczne kolory, będą nadawane dynamicznie na podstawie pozycji
+const stackCards = [
+  {
+    type: "company",
+    name: "Global Systems Inc.",
+    detail: "$28M revenue 2025",
+  },
+  {
+    type: "contact",
+    name: "Mark Spenser",
+    detail: "m.sps@lhs.com",
+  },
+  {
+    type: "contact",
+    name: "David Kim",
+    detail: "Head of Growth - Stripe",
+    contact: "d.kim@stripe.com • LinkedIn",
+  },
+  {
+    type: "company",
+    name: "NextGen Data",
+    detail: "Market Leader 2024",
+  },
+  {
+    type: "contact",
+    name: "John Snow",
+    detail: "CFO - OpenAI",
+    contact: "+1 415 555 0192",
+  },
+];
 
 export function ValueProposition() {
   const { ref, isVisible } = useReveal();
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  // Karty w formie stosu zgodnie z wireframe
-  const stackCards = [
-    {
-      type: "contact",
-      name: "Contact name",
-      detail: "Job Title - Company",
-      contact: "contact@example.com",
-      bgColor: "bg-muted/60",
-      textColor: "text-foreground",
-    },
-    {
-      type: "contact",
-      name: "John Snow",
-      detail: "CFO - OpenAI",
-      contact: "+48 123 456 789",
-      bgColor: "bg-muted/60",
-      textColor: "text-foreground",
-    },
-    {
-      type: "company",
-      name: "Company name",
-      detail: "$28M revenue 2025",
-      bgColor: "bg-foreground",
-      textColor: "text-background",
-      isHighlighted: true,
-    },
-    {
-      type: "contact",
-      name: "Mark Spenser",
-      detail: "Lufthansa",
-      contact: "m.sps@lhs.com",
-      bgColor: "bg-muted/60",
-      textColor: "text-foreground",
-    },
-    {
-      type: "contact",
-      name: "Jesus Christ",
-      detail: "Linked Profile",
-      bgColor: "bg-muted",
-      textColor: "text-foreground",
-    },
-    {
-      type: "company",
-      name: "Company name",
-      detail: "$28M revenue 2025",
-      bgColor: "bg-muted",
-      textColor: "text-foreground",
-    },
-  ];
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % stackCards.length);
+    }, 3000); // Zmiana co 3 sekundy
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section
       ref={ref}
-      className={`py-16 md:py-24 bg-white ${useRevealClass(isVisible)}`}
+      className={`py-24 md:py-32 bg-white ${useRevealClass(isVisible)}`}
       aria-labelledby="value-heading"
     >
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-start">
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
           {/* Left Column - Text */}
           <div className="space-y-6">
             <h2
@@ -77,97 +69,78 @@ export function ValueProposition() {
           </div>
 
           {/* Right Column - Stack Cards */}
-          <div className="relative h-[500px] lg:h-[600px] flex items-center justify-center">
-            <div className="relative w-full max-w-sm mx-auto">
+          <div className="relative h-[350px] flex items-center justify-center">
+            <div className="relative w-full max-w-sm mx-auto h-[250px] flex items-center justify-center">
               {stackCards.map((card, index) => {
-                // Pozycjonowanie kart z równomiernymi odstępami między środkami kart
-                const cardSpacing = 40; // Jednakowy odstęp między środkami kart
+                // Obliczanie wizualnego indeksu
+                const visualIndex = (index + activeIndex) % stackCards.length;
                 
-                // Obliczanie pozycji względem środka kontenera z równomiernymi odstępami
-                // Środkowa karta (index 2) jest na środku, pozostałe są równomiernie rozmieszczone
-                const centerIndex = 2; // Indeks środkowej karty
+                // Konfiguracja layoutu
+                const centerIndex = 2; // Środkowa karta
+                const isCenter = visualIndex === centerIndex;
+                const dist = Math.abs(visualIndex - centerIndex);
                 
-                const zIndex = card.isHighlighted ? 30 : 20 - Math.abs(index - centerIndex); // Środkowa karta na wierzchu, im dalej tym niżej
-                const scale = card.isHighlighted ? 1.05 : 1;
-                const translateX = card.isHighlighted ? "0px" : `${(index - centerIndex) * 2}px`; // Lekkie przesunięcie w poziomie
+                const yOffset = (visualIndex - centerIndex) * 65; 
+                const scale = 1 - (dist * 0.1);
+                const zIndex = 30 - (dist * 10);
                 
-                const offsetFromCenter = (index - centerIndex) * cardSpacing;
-                
+                // Opacity: aktywna 100%, pozostałe nieco mniej
+                const opacity = isCenter ? 1 : Math.max(0.0, 0.6 - ((dist - 1) * 0.3));
+
+                // Dynamiczne style w zależności od pozycji (isCenter)
+                // Aktywna: ciemny motyw (bg-primary ~ czarny, biały tekst)
+                // Nieaktywna: biała (bg-white, ciemny tekst, delikatny border)
+                const cardClasses = isCenter
+                  ? "bg-primary text-primary-foreground border-transparent"
+                  : "bg-white text-card-foreground border-border/40";
+
+                // Style ikon też muszą się dopasować do tła karty
+                // Na ciemnym tle: jasne, półprzezroczyste tło ikony
+                // Na białym tle: szare tło ikony (bg-muted)
+                const iconBgClass = isCenter
+                  ? "bg-white/15 text-white"
+                  : "bg-muted text-muted-foreground";
+
                 return (
                   <Card
                     key={index}
-                    className={`absolute w-full ${card.bgColor} ${card.textColor} border-0 shadow-lg transition-all duration-300 hover:z-50`}
+                    className={`absolute w-full left-0 right-0 mx-auto transition-all duration-700 ease-in-out border shadow-xl ${cardClasses}`}
                     style={{
-                      top: `50%`,
                       zIndex: zIndex,
-                      transform: `translateX(${translateX}) translateY(calc(${offsetFromCenter}px - 50%)) scale(${scale})`,
+                      transform: `translateY(${yOffset}px) scale(${scale})`,
+                      opacity: opacity,
+                      maxWidth: '320px'
                     }}
                   >
-                  {card.name !== "Mark Spenser" && (
                     <CardContent className="p-6">
-                      <div className="flex items-start gap-3">
+                      <div className="flex items-start gap-4">
                         <div
-                          className={`w-10 h-10 rounded ${
-                            card.type === "company"
-                              ? "bg-muted-foreground/20"
-                              : "bg-muted-foreground/20"
-                          } flex items-center justify-center flex-shrink-0`}
+                          className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors duration-700 ${iconBgClass}`}
                         >
-                          {card.type === "company" ? (
-                            <svg
-                              className="w-6 h-6"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                              />
-                            </svg>
-                          ) : (
-                            <svg
-                              className="w-6 h-6"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                              />
-                            </svg>
-                          )}
+                           {/* Ikony */}
+                           {card.type === "company" ? (
+                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                           ) : (
+                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                           )}
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <div
-                            className={`font-semibold ${
-                              card.isHighlighted ? "text-xl" : "text-base"
-                            } mb-1`}
-                          >
+                        
+                        <div className="flex-1 min-w-0 text-left">
+                          <div className={`font-semibold mb-1 truncate transition-all duration-700 ${isCenter ? 'text-lg' : 'text-base'}`}>
                             {card.name}
                           </div>
-                          <div
-                            className={`${
-                              card.isHighlighted ? "text-lg" : "text-sm"
-                            } opacity-90`}
-                          >
+                          <div className={`truncate transition-all duration-700 ${isCenter ? 'text-base opacity-90' : 'text-sm text-muted-foreground'}`}>
                             {card.detail}
                           </div>
                           {card.contact && (
-                            <div className="text-sm opacity-75 mt-1">
+                            <div className={`text-xs mt-2 truncate font-mono transition-all duration-700 ${isCenter ? 'opacity-75' : 'text-muted-foreground/70'}`}>
                               {card.contact}
                             </div>
                           )}
                         </div>
                       </div>
                     </CardContent>
-                  )}
-                </Card>
+                  </Card>
                 );
               })}
             </div>
