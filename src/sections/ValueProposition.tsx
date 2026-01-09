@@ -88,17 +88,16 @@ export function ValueProposition() {
                 const opacity = isCenter ? 1 : Math.max(0.0, 0.6 - ((dist - 1) * 0.3));
 
                 // Dynamiczne style w zależności od pozycji (isCenter)
-                // Aktywna: ciemny motyw (bg-primary ~ czarny, biały tekst)
+                // Aktywna: gradient #F1F7FD (lewo) -> #D9F4E6 (prawo), ciemny tekst
                 // Nieaktywna: biała (bg-white, ciemny tekst, delikatny border)
                 const cardClasses = isCenter
-                  ? "bg-primary text-primary-foreground border-transparent"
+                  ? "text-gray-900 border-transparent"
                   : "bg-white text-card-foreground border-border/40";
 
                 // Style ikon też muszą się dopasować do tła karty
-                // Na ciemnym tle: jasne, półprzezroczyste tło ikony
-                // Na białym tle: szare tło ikony (bg-muted)
+                // Na jasnym gradiencie: białe tło dla kontrastu i ciemna ikona
                 const iconBgClass = isCenter
-                  ? "bg-white/15 text-white"
+                  ? "bg-white text-gray-900 shadow-sm"
                   : "bg-muted text-muted-foreground";
 
                 return (
@@ -109,7 +108,8 @@ export function ValueProposition() {
                       zIndex: zIndex,
                       transform: `translateY(${yOffset}px) scale(${scale})`,
                       opacity: opacity,
-                      maxWidth: '320px'
+                      maxWidth: '320px',
+                      background: isCenter ? 'linear-gradient(to right, #F1F7FD, #D9F4E6)' : undefined
                     }}
                   >
                     <CardContent className="p-6">
