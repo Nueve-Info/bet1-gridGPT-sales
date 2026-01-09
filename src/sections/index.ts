@@ -1,0 +1,10 @@
+export { Header } from "./Header";
+export { Hero } from "./Hero";
+export { ValueProposition } from "./ValueProposition";
+export { SaveHours } from "./SaveHours";
+export { Pipeline } from "./Pipeline";
+export { GridGptFeatures } from "./GridGptFeatures";
+export { Testimonials } from "./Testimonials";
+export { FinalCta } from "./FinalCta";
+export { Faq } from "./Faq";
+export { Footer } from "./Footer";
