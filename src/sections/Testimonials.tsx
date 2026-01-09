@@ -1,9 +1,27 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { testimonials } from "@/content/landing";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
+import { User } from "lucide-react";
 
 export function Testimonials() {
   const { ref, isVisible } = useReveal();
+  const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
+
+  // Duplikujemy karty dla płynnej pętli
+  const duplicatedItems = [...testimonials.items, ...testimonials.items];
+
+  const toggleCard = (index: number) => {
+    setExpandedCards((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
+  };
 
   return (
     <section
@@ -20,42 +38,71 @@ export function Testimonials() {
           {testimonials.headline}
         </h2>
 
-        {/* Testimonials Carousel - horizontal scroll on mobile */}
-        <div className="relative">
-          <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 md:grid md:grid-cols-3 md:overflow-visible lg:grid-cols-5">
-            {testimonials.items.map((testimonial, index) => (
-              <Card
-                key={index}
-                className="border-0 shadow-sm min-w-[280px] snap-center md:min-w-0 flex-shrink-0"
-              >
-                <CardContent className="p-6 flex flex-col h-full">
-                  {/* Quote */}
-                  <blockquote className="flex-1">
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      "{testimonial.quote}"
-                    </p>
-                  </blockquote>
+        {/* Testimonials Carousel - automatyczna karuzela */}
+        <div className="relative overflow-hidden">
+          <div className="testimonials-carousel">
+            <div className="flex gap-4 animate-scroll">
+              {duplicatedItems.map((testimonial, index) => {
+                const isExpanded = expandedCards.has(index);
+                // Sprawdzamy czy tekst jest dłuższy niż ~5 linii (około 250-300 znaków)
+                const hasLongText = testimonial.quote.length > 250;
+                
+                return (
+                  <Card
+                    key={index}
+                    className={`border-0 shadow-sm min-w-[260px] max-w-[260px] flex-shrink-0 flex flex-col ${
+                      isExpanded ? '' : 'h-[212px]'
+                    }`}
+                  >
+                    <CardContent className="p-5 flex flex-col h-full">
+                      {/* Author - nad tekstem */}
+                      <div className="mb-3 flex items-center gap-3 shrink-0">
+                        {/* Avatar Icon */}
+                        <div
+                          className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center bg-muted"
+                          role="img"
+                          aria-label={`${testimonial.author}'s avatar`}
+                        >
+                          <User className="w-5 h-5 text-muted-foreground" />
+                        </div>
+                        <div>
+                          <div className="font-medium text-sm">
+                            {testimonial.author}
+                          </div>
+                          {testimonial.role && testimonial.company && (
+                            <div className="text-xs text-muted-foreground">
+                              {testimonial.role}, {testimonial.company}
+                            </div>
+                          )}
+                        </div>
+                      </div>
 
-                  {/* Author */}
-                  <div className="mt-6 flex items-center gap-3">
-                    {/* Avatar Placeholder */}
-                    <div
-                      className="w-10 h-10 rounded-full bg-muted shrink-0"
-                      role="img"
-                      aria-label={`${testimonial.author}'s avatar`}
-                    />
-                    <div>
-                      <div className="font-medium text-sm">
-                        {testimonial.author}
+                      {/* Quote */}
+                      <div className="relative flex-1">
+                        <blockquote
+                          onClick={() => hasLongText && toggleCard(index)}
+                          className={`text-sm text-muted-foreground leading-relaxed whitespace-pre-line ${
+                            hasLongText ? 'cursor-pointer' : ''
+                          }`}
+                          style={{
+                            maxHeight: isExpanded ? 'none' : '120px',
+                            minHeight: isExpanded ? 'auto' : '120px',
+                            height: isExpanded ? 'auto' : '120px',
+                            overflow: isExpanded ? 'visible' : 'hidden',
+                            transition: 'max-height 0.3s ease-out, min-height 0.3s ease-out, height 0.3s ease-out',
+                          }}
+                        >
+                          {testimonial.quote}
+                        </blockquote>
+                        {hasLongText && !isExpanded && (
+                          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-card via-card/95 to-transparent pointer-events-none" />
+                        )}
                       </div>
-                      <div className="text-xs text-muted-foreground">
-                        {testimonial.role}, {testimonial.company}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

@@ -143,38 +143,59 @@ export const testimonials = {
   items: [
     {
       quote:
-        "GridGPT cut our prospecting time by 70%. We now spend more time selling and less time researching.",
-      author: "Sarah Chen",
-      role: "VP Sales",
-      company: "TechCorp",
+        "I'm impressed 😎\n\nSystematized knowledge that can be immediately implemented in daily work, a step-by-step process.\n\nI went through the entire week's material in one evening and can't wait for the next lessons!\n\nFor me, the best part was breaking down headlines into their components, explaining how to understand them, and presenting the 'letter method' 🔥🔥🔥",
+      author: "Kinga",
+      role: "",
+      company: "",
     },
     {
       quote:
-        "The AI-powered search is incredible. It finds prospects we never would have discovered manually.",
-      author: "Michael Rodriguez",
-      role: "SDR Manager",
-      company: "GrowthCo",
+        "God, great, this is exactly what I don't feel good about, it's great that something like this was created.",
+      author: "Sławek",
+      role: "",
+      company: "",
     },
     {
       quote:
-        "Finally, a tool that actually understands our ICP and delivers relevant leads consistently.",
-      author: "Emily Watson",
-      role: "Head of Revenue",
-      company: "ScaleUp Inc",
+        "I thought I was already creating good landing pages, but this course made them turbo mega good. 👉 What I remember most is a different perspective on the design process. It completely changed my way of looking at it. Now, creating ideas for a concept goes much faster than before. In addition, a case study taken from life - awesome. I recommend it to everyone. 🔥",
+      author: "Wiktoria Wiśniewska",
+      role: "",
+      company: "",
     },
     {
       quote:
-        "The data quality is outstanding. We've seen a 3x improvement in our email response rates.",
-      author: "David Kim",
-      role: "Sales Director",
-      company: "Enterprise Solutions",
+        "Overall, thanks for this dose of knowledge, valuable time and I am convinced that this is a topic for me to explore further 🥰",
+      author: "Kasia Cicho",
+      role: "",
+      company: "",
     },
     {
       quote:
-        "GridGPT transformed how our team approaches outbound. It's like having a research assistant for each rep.",
-      author: "Lisa Thompson",
-      role: "CRO",
-      company: "FastGrowth",
+        "Super practical — helps you avoid mistakes. Top quality, better than any program I've joined before.",
+      author: "Martyna",
+      role: "",
+      company: "",
+    },
+    {
+      quote:
+        "I also want to add — I forgot to mention — that there's a really good energy and sense of humor in all of this, which makes it easier and more enjoyable to absorb.",
+      author: "Klaudi",
+      role: "",
+      company: "",
+    },
+    {
+      quote:
+        "Loved how everything was explained clearly and practically — perfect program even for beginners.",
+      author: "Asia",
+      role: "",
+      company: "",
+    },
+    {
+      quote:
+        "Exactly what I needed — clear structure, great examples, and everything to start taking action right away.",
+      author: "Tomek Sawicki",
+      role: "",
+      company: "",
     },
   ],
 };
