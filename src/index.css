@@ -175,7 +175,7 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-50% - 1.5rem));
+    transform: translateX(-50%);
   }
 }
 
@@ -200,6 +200,7 @@
 .animate-scroll {
   animation: scroll 60s linear infinite;
   will-change: transform;
+  width: fit-content;
 }
 
 @media (prefers-reduced-motion: reduce) {

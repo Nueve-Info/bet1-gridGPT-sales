@@ -59,107 +59,121 @@ export function FinalCta() {
       aria-labelledby="final-cta-heading"
     >
       <div className="container mx-auto px-4 md:px-6">
-        <div className="max-w-2xl mx-auto text-center space-y-6">
-          {/* Headline */}
-          <h2
-            id="final-cta-heading"
-            className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl"
-          >
-            {finalCta.headline}
-          </h2>
-
-          {/* Description */}
-          <p className="text-muted-foreground md:text-lg">
-            {finalCta.description}
-          </p>
-
-          {/* Form */}
-          {status === "success" ? (
-            <div
-              ref={messageRef}
-              tabIndex={-1}
-              className="flex flex-col items-center gap-4 p-6 rounded-lg bg-muted/50"
-              role="status"
-              aria-live="polite"
-            >
-              <CheckCircle2 className="w-12 h-12 text-primary" />
-              <p className="font-medium">{finalCta.successMessage}</p>
+        {/* Main CTA Container with gradient and shadow */}
+        <div className="max-w-6xl mx-auto rounded-3xl bg-gradient-to-br from-blue-50 via-blue-50/50 to-green-50 shadow-xl p-8 md:p-12 lg:p-16">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Left Side - Placeholder */}
+            <div className="relative flex items-center justify-center order-2 md:order-1">
+              <div className="w-full max-w-md aspect-[4/3] bg-white rounded-lg border border-gray-200 flex items-center justify-center">
+                <div className="text-gray-400 text-sm">Placeholder</div>
+              </div>
             </div>
-          ) : (
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col gap-4 sm:flex-row sm:gap-2 max-w-md mx-auto"
-              noValidate
-            >
-              {/* Honeypot field - hidden from real users */}
-              <div className="sr-only" aria-hidden="true">
-                <label htmlFor="website">Website</label>
-                <input
-                  type="text"
-                  id="website"
-                  name="website"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  value={honeypot}
-                  onChange={(e) => setHoneypot(e.target.value)}
-                />
-              </div>
 
-              <div className="flex-1 relative">
-                <label htmlFor="email" className="sr-only">
-                  Email address
-                </label>
-                <Input
-                  ref={inputRef}
-                  id="email"
-                  type="email"
-                  placeholder={finalCta.placeholder}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={status === "loading"}
-                  aria-describedby={status === "error" ? "email-error" : undefined}
-                  aria-invalid={status === "error"}
-                  required
-                />
-              </div>
-
-              <Button
-                type="submit"
-                disabled={status === "loading"}
-                data-analytics="form:waitlist_submit"
-                className="min-w-[100px]"
+            {/* Right Side - Text and Form */}
+            <div className="space-y-6 order-1 md:order-2">
+              {/* Headline */}
+              <h2
+                id="final-cta-heading"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 leading-tight"
               >
-                {status === "loading" ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span className="sr-only">Submitting...</span>
-                  </>
-                ) : (
-                  finalCta.buttonText
-                )}
-              </Button>
-            </form>
-          )}
+                Your leads are waiting for you. Get to know them!
+              </h2>
 
-          {/* Error Message */}
-          {status === "error" && (
-            <div
-              ref={messageRef}
-              tabIndex={-1}
-              id="email-error"
-              className="flex flex-col items-center gap-3 text-sm"
-              role="alert"
-              aria-live="assertive"
-            >
-              <div className="flex items-center gap-2 text-destructive">
-                <AlertCircle className="w-4 h-4" />
-                <span>{errorMessage}</span>
-              </div>
-              <Button variant="ghost" size="sm" onClick={handleRetry}>
-                Try again
-              </Button>
+              {/* Description */}
+              <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+                Sign up for a waitlist. Be the first to boost your outreach game.
+              </p>
+
+              {/* Form */}
+              {status === "success" ? (
+                <div
+                  ref={messageRef}
+                  tabIndex={-1}
+                  className="flex flex-col items-start gap-4 p-6 rounded-lg bg-white/80 backdrop-blur-sm border border-gray-200"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <CheckCircle2 className="w-12 h-12 text-green-600" />
+                  <p className="font-medium text-gray-900">{finalCta.successMessage}</p>
+                </div>
+              ) : (
+                <form
+                  onSubmit={handleSubmit}
+                  className="flex flex-col sm:flex-row gap-3"
+                  noValidate
+                >
+                  {/* Honeypot field - hidden from real users */}
+                  <div className="sr-only" aria-hidden="true">
+                    <label htmlFor="website">Website</label>
+                    <input
+                      type="text"
+                      id="website"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="flex-1">
+                    <label htmlFor="email" className="sr-only">
+                      Email address
+                    </label>
+                    <Input
+                      ref={inputRef}
+                      id="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      disabled={status === "loading"}
+                      aria-describedby={status === "error" ? "email-error" : undefined}
+                      aria-invalid={status === "error"}
+                      className="h-12 rounded-lg border-gray-300 bg-white"
+                      required
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={status === "loading"}
+                    data-analytics="form:waitlist_submit"
+                    className="h-12 px-6 rounded-lg bg-black text-white hover:bg-gray-800 min-w-[140px]"
+                  >
+                    {status === "loading" ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span className="sr-only">Submitting...</span>
+                      </>
+                    ) : (
+                      "Join the early list"
+                    )}
+                  </Button>
+                </form>
+              )}
+
+              {/* Error Message */}
+              {status === "error" && (
+                <div
+                  ref={messageRef}
+                  tabIndex={-1}
+                  id="email-error"
+                  className="flex flex-col items-start gap-3 text-sm"
+                  role="alert"
+                  aria-live="assertive"
+                >
+                  <div className="flex items-center gap-2 text-red-600">
+                    <AlertCircle className="w-4 h-4" />
+                    <span>{errorMessage}</span>
+                  </div>
+                  <Button variant="ghost" size="sm" onClick={handleRetry}>
+                    Try again
+                  </Button>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </section>
