@@ -13,10 +13,10 @@ export function Header() {
         {/* Logo */}
         <a
           href="/"
-          className="flex items-center space-x-2 font-semibold text-lg"
+          className="flex items-center font-semibold text-lg"
           aria-label={`${navigation.logo} - Home`}
         >
-          <span className="text-foreground">{navigation.logo}</span>
+          <img src="/logo.png" alt="" className="h-7 w-auto" />
         </a>
 
         {/* CTA Button */}
