@@ -1,8 +1,16 @@
 import { saveHours } from "@/content/landing";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
+import { useCountUp } from "@/hooks/useCountUp";
+import chartImage from "../../assets/chart.png";
 
 export function SaveHours() {
   const { ref, isVisible } = useReveal();
+  const animatedValue = useCountUp({
+    end: 65.8,
+    duration: 3000,
+    enabled: isVisible,
+    decimals: 1,
+  });
 
   return (
     <section
@@ -25,9 +33,9 @@ export function SaveHours() {
             </p>
 
             {/* Big Stat */}
-            <div className="space-y-2">
-              <div className="text-5xl font-bold text-foreground md:text-6xl">
-                {saveHours.stat.value}
+            <div className="space-y-4">
+              <div className="text-6xl font-bold text-foreground md:text-7xl lg:text-8xl">
+                {animatedValue}%
               </div>
               <p className="text-sm text-muted-foreground max-w-md">
                 {saveHours.stat.label}
@@ -35,63 +43,13 @@ export function SaveHours() {
             </div>
           </div>
 
-          {/* Right Column - Chart Placeholder */}
+          {/* Right Column - Chart */}
           <div className="relative">
-            {/* Pie Chart Placeholder */}
-            <div
-              className="aspect-square w-full max-w-sm mx-auto"
-              role="img"
-              aria-label="Pie chart showing time spent on prospecting vs selling"
-            >
-              <svg
-                viewBox="0 0 200 200"
-                className="w-full h-full"
-                aria-hidden="true"
-              >
-                {/* Prospecting slice (65.8%) */}
-                <circle
-                  cx="100"
-                  cy="100"
-                  r="80"
-                  fill="none"
-                  stroke="hsl(var(--muted))"
-                  strokeWidth="40"
-                  strokeDasharray="330.6 503.4"
-                  strokeDashoffset="125.85"
-                  transform="rotate(-90 100 100)"
-                />
-                {/* Selling slice (34.2%) */}
-                <circle
-                  cx="100"
-                  cy="100"
-                  r="80"
-                  fill="none"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="40"
-                  strokeDasharray="171.8 503.4"
-                  strokeDashoffset="-204.75"
-                  transform="rotate(-90 100 100)"
-                />
-                {/* Center circle */}
-                <circle cx="100" cy="100" r="60" fill="hsl(var(--background))" />
-              </svg>
-
-              {/* Legend */}
-              <div className="flex justify-center gap-6 mt-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-muted" />
-                  <span className="text-sm text-muted-foreground">
-                    {saveHours.chartLabels.prospecting}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-primary" />
-                  <span className="text-sm text-muted-foreground">
-                    {saveHours.chartLabels.selling}
-                  </span>
-                </div>
-              </div>
-            </div>
+            <img
+              src={chartImage}
+              alt="Pie chart showing time spent on prospecting vs selling"
+              className="w-full max-w-sm mx-auto"
+            />
           </div>
         </div>
       </div>
