@@ -1,5 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { pipeline } from "@/content/landing";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
 
@@ -9,7 +7,7 @@ export function Pipeline() {
   return (
     <section
       ref={ref}
-      className={`py-16 md:py-24 bg-muted/30 ${useRevealClass(isVisible)}`}
+      className={`py-16 md:py-24 bg-background ${useRevealClass(isVisible)}`}
       aria-labelledby="pipeline-heading"
     >
       <div className="container mx-auto px-4 md:px-6">
@@ -23,50 +21,30 @@ export function Pipeline() {
           </h2>
         </div>
 
-        {/* Pipeline Columns */}
-        <div className="grid gap-6 md:grid-cols-3">
-          {pipeline.columns.map((column, index) => (
-            <Card key={index} className="border-0 shadow-sm">
-              <CardHeader>
-                <CardTitle className="text-lg">{column.title}</CardTitle>
-                <CardDescription>{column.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Items List */}
-                <ul className="space-y-2">
-                  {column.items.map((item, itemIndex) => (
-                    <li
-                      key={itemIndex}
-                      className="text-sm text-muted-foreground flex items-start gap-2"
-                    >
-                      <span className="text-primary mt-1">•</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Highlight Badge (if exists) */}
-                {column.highlight && (
-                  <Badge variant="secondary" className="mt-4">
-                    {column.highlight}
-                  </Badge>
-                )}
-
-                {/* Placeholder for visual */}
-                <div
-                  className="aspect-[4/3] w-full rounded-md bg-muted mt-4"
-                  role="img"
-                  aria-label={`${column.title} visualization`}
-                >
-                  <div className="h-full flex items-center justify-center">
-                    <span className="text-xs text-muted-foreground">
-                      Visual placeholder
-                    </span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+        {/* Video */}
+        <div className="w-full">
+          <div
+            className="w-full rounded-lg bg-muted overflow-hidden"
+            role="img"
+            aria-label="Video"
+          >
+            <div style={{ padding: "42.02% 0 0 0", position: "relative" }}>
+              <iframe
+                src="https://player.vimeo.com/video/1153677560?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1"
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: "-2px",
+                  width: "calc(100% + 2px)",
+                  height: "100%",
+                }}
+                title="process"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>

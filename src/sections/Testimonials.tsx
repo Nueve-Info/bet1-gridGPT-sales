@@ -26,10 +26,10 @@ export function Testimonials() {
   return (
     <section
       ref={ref}
-      className={`py-16 md:py-24 bg-muted/30 ${useRevealClass(isVisible)}`}
+      className={`relative w-full py-24 md:py-32 bg-muted/30 z-0 ${useRevealClass(isVisible)}`}
       aria-labelledby="testimonials-heading"
     >
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-4 md:px-6 w-full overflow-x-hidden">
         {/* Section Header */}
         <h2
           id="testimonials-heading"
@@ -41,7 +41,7 @@ export function Testimonials() {
         {/* Testimonials Carousel - automatyczna karuzela */}
         <div className="relative overflow-hidden">
           <div className="testimonials-carousel">
-            <div className="flex gap-4 animate-scroll">
+            <div className="flex gap-6 animate-scroll">
               {duplicatedItems.map((testimonial, index) => {
                 const isExpanded = expandedCards.has(index);
                 // Sprawdzamy czy tekst jest dłuższy niż ~5 linii (około 250-300 znaków)
@@ -50,27 +50,27 @@ export function Testimonials() {
                 return (
                   <Card
                     key={index}
-                    className={`border-0 shadow-sm min-w-[260px] max-w-[260px] flex-shrink-0 flex flex-col ${
-                      isExpanded ? '' : 'h-[212px]'
+                    className={`shadow-sm min-w-[320px] max-w-[320px] flex-shrink-0 flex flex-col ${
+                      isExpanded ? '' : 'h-[280px]'
                     }`}
                   >
-                    <CardContent className="p-5 flex flex-col h-full">
+                    <CardContent className="p-6 flex flex-col h-full">
                       {/* Author - nad tekstem */}
-                      <div className="mb-3 flex items-center gap-3 shrink-0">
+                      <div className="mb-4 flex items-center gap-3 shrink-0">
                         {/* Avatar Icon */}
                         <div
-                          className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center bg-muted"
+                          className="w-12 h-12 rounded-full shrink-0 flex items-center justify-center bg-muted"
                           role="img"
                           aria-label={`${testimonial.author}'s avatar`}
                         >
-                          <User className="w-5 h-5 text-muted-foreground" />
+                          <User className="w-6 h-6 text-muted-foreground" />
                         </div>
                         <div>
-                          <div className="font-medium text-sm">
+                          <div className="font-medium text-base">
                             {testimonial.author}
                           </div>
                           {testimonial.role && testimonial.company && (
-                            <div className="text-xs text-muted-foreground">
+                            <div className="text-sm text-muted-foreground">
                               {testimonial.role}, {testimonial.company}
                             </div>
                           )}
@@ -81,13 +81,13 @@ export function Testimonials() {
                       <div className="relative flex-1">
                         <blockquote
                           onClick={() => hasLongText && toggleCard(index)}
-                          className={`text-sm text-muted-foreground leading-relaxed whitespace-pre-line ${
+                          className={`text-base text-muted-foreground leading-relaxed whitespace-pre-line ${
                             hasLongText ? 'cursor-pointer' : ''
                           }`}
                           style={{
-                            maxHeight: isExpanded ? 'none' : '120px',
-                            minHeight: isExpanded ? 'auto' : '120px',
-                            height: isExpanded ? 'auto' : '120px',
+                            maxHeight: isExpanded ? 'none' : '160px',
+                            minHeight: isExpanded ? 'auto' : '160px',
+                            height: isExpanded ? 'auto' : '160px',
                             overflow: isExpanded ? 'visible' : 'hidden',
                             transition: 'max-height 0.3s ease-out, min-height 0.3s ease-out, height 0.3s ease-out',
                           }}

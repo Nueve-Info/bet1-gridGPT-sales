@@ -18,8 +18,8 @@ function App() {
       <main id="main-content" className="flex-1">
         <Hero />
         <ValueProposition />
-        <SaveHours />
         <Pipeline />
+        <SaveHours />
         <GridGptFeatures />
         <Testimonials />
         <FinalCta />
