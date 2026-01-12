@@ -9,231 +9,170 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 type Feature = (typeof gridGptFeatures)[number];
 
-interface TabItemProps {
+// ─────────────────────────────────────────────────────────────────────────────
+// Components
+// ─────────────────────────────────────────────────────────────────────────────
+
+function FeatureNavButton({
+  feature,
+  isActive,
+  onClick,
+  buttonRef,
+}: {
   feature: Feature;
-  index: number;
   isActive: boolean;
   onClick: () => void;
-  controlsId: string;
-}
-
-interface FeatureDescriptionProps {
-  feature: Feature;
-  id: string;
-  prefersReducedMotion: boolean;
-}
-
-interface FeaturePlaceholderProps {
-  feature: Feature;
-  prefersReducedMotion: boolean;
-}
-
-interface MobileFeatureBlockProps {
-  feature: Feature;
-  index: number;
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Hook: detect reduced motion preference
-// ─────────────────────────────────────────────────────────────────────────────
-
-function usePrefersReducedMotion(): boolean {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReducedMotion(mql.matches);
-
-    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
-    mql.addEventListener("change", handler);
-    return () => mql.removeEventListener("change", handler);
-  }, []);
-
-  return prefersReducedMotion;
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Hook: detect if screen is desktop (lg+)
-// ─────────────────────────────────────────────────────────────────────────────
-
-function useIsDesktop(): boolean {
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    const mql = window.matchMedia("(min-width: 1024px)");
-    setIsDesktop(mql.matches);
-
-    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
-    mql.addEventListener("change", handler);
-    return () => mql.removeEventListener("change", handler);
-  }, []);
-
-  return isDesktop;
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Sub-components
-// ─────────────────────────────────────────────────────────────────────────────
-
-function TabItem({ feature, index, isActive, onClick, controlsId }: TabItemProps) {
+  buttonRef?: (el: HTMLButtonElement | null) => void;
+}) {
   return (
     <button
+      ref={buttonRef}
       onClick={onClick}
       className={cn(
-        "w-full text-left transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-lg p-3",
+        "w-full text-left p-4 md:p-5 transition-all duration-300 group relative border-b border-border last:border-0 flex-1",
         isActive
-          ? "bg-primary/10 text-foreground"
-          : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+          ? "bg-black text-white border-b-black"
+          : "bg-transparent text-foreground hover:bg-muted/30"
       )}
-      aria-current={isActive ? "step" : undefined}
-      aria-controls={controlsId}
+      aria-selected={isActive}
+      role="tab"
     >
-      <div className="flex items-center gap-3">
-        <div
-          className={cn(
-            "w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 transition-colors",
-            isActive
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground"
-          )}
-        >
-          {index + 1}
-        </div>
-        <div className="flex-1 min-w-0">
-          <div
-            className={cn(
-              "text-base transition-colors leading-tight",
-              isActive ? "font-semibold" : "font-medium"
-            )}
-          >
-            {feature.headline}
-          </div>
-          <div
-            className={cn(
-              "text-xs mt-0.5 transition-colors",
-              isActive ? "text-muted-foreground" : "text-muted-foreground/70"
-            )}
-          >
-            {feature.badge}
-          </div>
-        </div>
-      </div>
+      {/* Active Indicator Arrow (Desktop) - Optional visual flair */}
+      {isActive && (
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-4 h-4 bg-black rotate-45 hidden lg:block z-10" />
+      )}
+      
+      <span className={cn(
+        "text-lg md:text-xl font-bold leading-tight block transition-colors duration-300",
+        isActive ? "text-white" : "text-foreground group-hover:text-foreground/80"
+      )}>
+        {feature.title}
+      </span>
     </button>
   );
 }
 
-function FeatureDescription({ feature, id, prefersReducedMotion }: FeatureDescriptionProps) {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      setIsMounted(true);
-      return;
-    }
-    setIsMounted(false);
-    const timer = setTimeout(() => setIsMounted(true), 10);
-    return () => clearTimeout(timer);
-  }, [feature, prefersReducedMotion]);
-
+function FeatureContentPanel({ feature }: { feature: Feature }) {
   return (
-    <div
-      id={id}
-      className={cn(
-        "space-y-3",
-        !prefersReducedMotion && "transition-opacity duration-300 ease-out",
-        !prefersReducedMotion && (isMounted ? "opacity-100" : "opacity-0")
-      )}
-    >
-      <h3 className="text-xl font-semibold text-foreground">
-        {feature.headline}
-      </h3>
-      {feature.points.length > 0 && (
-        <ul className="space-y-1">
-          {feature.points.map((point, idx) => (
-            <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-              <span className="text-primary mt-0.5">•</span>
-              <span>{point}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-      <p className="text-base text-muted-foreground leading-relaxed">
-        {feature.description}
-      </p>
+    <div className="h-full flex flex-col justify-center p-6 md:p-8 lg:p-10 space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
+      <div>
+        <h3 className="text-sm font-medium text-white/60 mb-2 uppercase tracking-wider">
+          Description
+        </h3>
+        <p className="text-base md:text-lg text-white leading-relaxed max-w-lg">
+          {feature.description}
+        </p>
+      </div>
+
+      {/* Image Placeholder */}
+      <div 
+        className="w-full aspect-video bg-white/10 rounded-lg border border-white/10 flex items-center justify-center relative overflow-hidden group"
+        role="img" 
+        aria-label={feature.mediaAlt}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <span className="text-white/40 text-sm font-medium">
+          Photo placeholder
+        </span>
+      </div>
     </div>
   );
 }
 
-function FeaturePlaceholder({ feature, prefersReducedMotion }: FeaturePlaceholderProps) {
-  const [isMounted, setIsMounted] = useState(false);
+// ─────────────────────────────────────────────────────────────────────────────
+// Hook do sticky scroll z tabami
+// ─────────────────────────────────────────────────────────────────────────────
+
+function useStickyTabScroll(itemCount: number) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeIndexRef = useRef(0);
+  const scrollAccumulator = useRef(0);
+  const lastTabChangeTime = useRef(0);
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      setIsMounted(true);
-      return;
-    }
-    setIsMounted(false);
-    const timer = setTimeout(() => setIsMounted(true), 10);
-    return () => clearTimeout(timer);
-  }, [feature, prefersReducedMotion]);
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
 
-  return (
-    <div
-      className={cn(
-        "w-full rounded-lg bg-muted aspect-video flex items-center justify-center",
-        !prefersReducedMotion && "transition-opacity duration-300 ease-out",
-        !prefersReducedMotion && (isMounted ? "opacity-100" : "opacity-0")
-      )}
-      role="img"
-      aria-label={feature.mediaAlt}
-    >
-      <span className="text-sm text-muted-foreground text-center px-4">
-        {feature.mediaAlt}
-      </span>
-    </div>
-  );
-}
+  const handleTabClick = useCallback((index: number) => {
+    setActiveIndex(index);
+    activeIndexRef.current = index;
+    lastTabChangeTime.current = Date.now();
+  }, []);
 
-function MobileFeatureBlock({ feature, index }: MobileFeatureBlockProps) {
-  return (
-    <div className="space-y-4 py-8 first:pt-0 last:pb-0">
-      <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold shrink-0">
-          {index + 1}
-        </div>
-        <div>
-          <h3 className="text-lg font-semibold text-foreground">
-            {feature.headline}
-          </h3>
-          <p className="text-xs text-muted-foreground">{feature.badge}</p>
-        </div>
-      </div>
-      {feature.points.length > 0 && (
-        <ul className="space-y-1 pl-11">
-          {feature.points.map((point, idx) => (
-            <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-              <span className="text-primary mt-0.5">•</span>
-              <span>{point}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-      <p className="text-base text-muted-foreground leading-relaxed pl-11">
-        {feature.description}
-      </p>
-      <div className="pl-11">
-        <div
-          className="w-full rounded-lg bg-muted aspect-video flex items-center justify-center"
-          role="img"
-          aria-label={feature.mediaAlt}
-        >
-          <span className="text-sm text-muted-foreground text-center px-4">
-            {feature.mediaAlt}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const container = containerRef.current;
+    
+    const handleWheel = (e: WheelEvent) => {
+      const rect = container.getBoundingClientRect();
+      
+      // Sprawdź czy sekcja jest w widoku (sticky powinna być aktywna)
+      // Sekcja jest sticky gdy górna krawędź jest na górze lub powyżej viewportu,
+      // a dolna krawędź jest poniżej viewportu
+      const isSectionInView = rect.top <= 0 && rect.bottom >= window.innerHeight;
+      
+      if (!isSectionInView) {
+        scrollAccumulator.current = 0;
+        return; // Pozwól na normalny scroll
+      }
+
+      const currentIndex = activeIndexRef.current;
+      
+      // Jeśli na ostatnim tabie i scrollujemy w dół - pozwól wyjść z sekcji
+      if (currentIndex === itemCount - 1 && e.deltaY > 0) {
+        scrollAccumulator.current = 0;
+        return;
+      }
+      
+      // Jeśli na pierwszym tabie i scrollujemy w górę - pozwól wyjść z sekcji
+      if (currentIndex === 0 && e.deltaY < 0) {
+        scrollAccumulator.current = 0;
+        return;
+      }
+
+      // Blokuj normalny scroll i akumuluj dla zmiany tabów
+      e.preventDefault();
+      
+      const now = Date.now();
+      const MIN_SCROLL_DELTA = 50;
+      const MIN_TIME_BETWEEN_CHANGES = 200;
+      
+      scrollAccumulator.current += Math.abs(e.deltaY);
+      
+      if (now - lastTabChangeTime.current < MIN_TIME_BETWEEN_CHANGES) {
+        return;
+      }
+      
+      if (scrollAccumulator.current < MIN_SCROLL_DELTA) {
+        return;
+      }
+      
+      scrollAccumulator.current = 0;
+      lastTabChangeTime.current = now;
+      
+      if (e.deltaY > 0) {
+        // Scroll w dół - następny tab
+        const newIndex = Math.min(itemCount - 1, currentIndex + 1);
+        setActiveIndex(newIndex);
+        activeIndexRef.current = newIndex;
+      } else {
+        // Scroll w górę - poprzedni tab
+        const newIndex = Math.max(0, currentIndex - 1);
+        setActiveIndex(newIndex);
+        activeIndexRef.current = newIndex;
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+    };
+  }, [itemCount]);
+
+  return { containerRef, activeIndex, handleTabClick };
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -241,167 +180,87 @@ function MobileFeatureBlock({ feature, index }: MobileFeatureBlockProps) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function GridGptFeatures() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const intersectionRatios = useRef<number[]>(gridGptFeatures.map(() => 0));
   const { ref: revealRef, isVisible } = useReveal();
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const isDesktop = useIsDesktop();
-
-  // ─────────────────────────────────────────────────────────────────────────
-  // IntersectionObserver for scroll-linked steps (desktop only)
-  // Tracks intersection ratios for ALL steps to ensure smooth transitions
-  // ─────────────────────────────────────────────────────────────────────────
-
-  useEffect(() => {
-    if (!isDesktop) return;
-
-    const steps = stepRefs.current.filter(Boolean) as HTMLDivElement[];
-    if (steps.length === 0) return;
-
-    // Reset ratios
-    intersectionRatios.current = gridGptFeatures.map(() => 0);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Update ratios for changed entries
-        for (const entry of entries) {
-          const index = steps.indexOf(entry.target as HTMLDivElement);
-          if (index !== -1) {
-            intersectionRatios.current[index] = entry.isIntersecting
-              ? entry.intersectionRatio
-              : 0;
-          }
-        }
-
-        // Find the step with highest intersection ratio
-        let maxRatio = 0;
-        let maxIndex = 0;
-
-        for (let i = 0; i < intersectionRatios.current.length; i++) {
-          const ratio = intersectionRatios.current[i];
-          if (ratio > maxRatio) {
-            maxRatio = ratio;
-            maxIndex = i;
-          }
-        }
-
-        // Only update if we have a visible step
-        if (maxRatio > 0) {
-          setActiveIndex(maxIndex);
-        }
-      },
-      {
-        // More granular thresholds for smoother transitions
-        threshold: Array.from({ length: 21 }, (_, i) => i * 0.05),
-        rootMargin: "-20% 0px -20% 0px",
-      }
-    );
-
-    steps.forEach((step) => observer.observe(step));
-
-    return () => {
-      steps.forEach((step) => observer.unobserve(step));
-    };
-  }, [isDesktop]);
-
-  // ─────────────────────────────────────────────────────────────────────────
-  // Handle tab click → scroll to step
-  // ─────────────────────────────────────────────────────────────────────────
-
-  const handleTabClick = useCallback(
-    (index: number) => {
-      const step = stepRefs.current[index];
-      if (step) {
-        step.scrollIntoView({
-          behavior: prefersReducedMotion ? "auto" : "smooth",
-          block: "center",
-        });
-        setActiveIndex(index);
-      }
-    },
-    [prefersReducedMotion]
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  
+  const { containerRef, activeIndex, handleTabClick } = useStickyTabScroll(
+    gridGptFeatures.length
   );
 
   const activeFeature = gridGptFeatures[activeIndex];
-  const contentId = `feature-content-${activeIndex}`;
 
   return (
     <section
       id="features"
       aria-label="GridGPT Features"
-      className={cn("py-16 md:py-24 bg-muted/30", useRevealClass(isVisible))}
+      className={cn("bg-background", useRevealClass(isVisible))}
+      ref={revealRef}
     >
-      <div ref={revealRef} className="container mx-auto px-4 md:px-6">
-        {/* Section Header */}
-        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl mb-8 lg:mb-12">
-          GridGPT is
-        </h2>
+      {/* 
+        Wrapper z wysokością = 100vh + (liczba tabów - 1) * 50vh
+        Dzięki temu mamy miejsce na scroll, podczas gdy sticky content pozostaje na miejscu
+      */}
+      <div 
+        ref={containerRef}
+        className="relative"
+        style={{ height: `${100 + (gridGptFeatures.length - 1) * 50}vh` }}
+      >
+        {/* Sticky container - pozostaje na miejscu podczas scrollowania */}
+        {/* top-16 = 64px (wysokość headera), h-[calc(100vh-4rem)] aby zmieścić się pod headerem */}
+        <div className="sticky top-16 h-[calc(100vh-4rem)] flex flex-col">
+          {/* Header */}
+          <div className="container mx-auto px-4 md:px-6 py-4 md:py-6">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 md:mb-6">
+              GridGPT is
+            </h2>
+          </div>
 
-        {/* ───────────────────────────────────────────────────────────────────
-            DESKTOP: Sticky stepper layout
-        ─────────────────────────────────────────────────────────────────── */}
-        <div className="hidden lg:block">
-          <div className="relative">
-            {/* Sticky UI Container */}
-            <div className="lg:sticky lg:top-20 z-10 bg-muted/30 pb-4">
-              <div className="grid lg:grid-cols-[300px_1fr] gap-8 items-stretch">
-                {/* Left: Tab List */}
-                <nav
-                  aria-label="Feature steps"
-                  className="space-y-2 bg-background/80 backdrop-blur-sm rounded-xl p-4 shadow-sm border h-full"
-                >
+          {/* Main content area */}
+          <div className="flex-1 w-full border-y border-border bg-background">
+            <div className="container mx-auto px-0 md:px-0 h-full">
+              <div className="flex flex-col lg:flex-row h-full">
+                {/* Left Column: Navigation */}
+                <div className="w-full lg:w-1/3 flex flex-col bg-white">
                   {gridGptFeatures.map((feature, index) => (
-                    <TabItem
+                    <FeatureNavButton
                       key={index}
                       feature={feature}
-                      index={index}
                       isActive={activeIndex === index}
                       onClick={() => handleTabClick(index)}
-                      controlsId={contentId}
+                      buttonRef={(el) => {
+                        buttonRefs.current[index] = el;
+                      }}
                     />
                   ))}
-                </nav>
+                </div>
 
-                {/* Right: Description + Placeholder */}
-                <div className="space-y-6 bg-background/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border h-full">
-                  <FeatureDescription
-                    key={activeIndex}
-                    feature={activeFeature}
-                    id={contentId}
-                    prefersReducedMotion={prefersReducedMotion}
-                  />
-                  <FeaturePlaceholder
-                    key={`placeholder-${activeIndex}`}
-                    feature={activeFeature}
-                    prefersReducedMotion={prefersReducedMotion}
+                {/* Right Column: Content */}
+                <div className="w-full lg:w-2/3 bg-black text-white relative flex-1">
+                  <FeatureContentPanel 
+                    key={activeIndex} 
+                    feature={activeFeature} 
                   />
                 </div>
               </div>
             </div>
-
-            {/* Scroll Steps (invisible, drive the IntersectionObserver) */}
-            <div className="relative -mt-[50vh]" aria-hidden="true">
-              {gridGptFeatures.map((_, index) => (
-                <div
-                  key={index}
-                  ref={(el) => {
-                    stepRefs.current[index] = el;
-                  }}
-                  className="h-[60vh] pointer-events-none"
-                />
-              ))}
-            </div>
           </div>
-        </div>
 
-        {/* ───────────────────────────────────────────────────────────────────
-            MOBILE: Simple stacked blocks
-        ─────────────────────────────────────────────────────────────────── */}
-        <div className="lg:hidden divide-y divide-border">
-          {gridGptFeatures.map((feature, index) => (
-            <MobileFeatureBlock key={index} feature={feature} index={index} />
-          ))}
+          {/* Progress indicators */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+            {gridGptFeatures.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handleTabClick(index)}
+                className={cn(
+                  "w-2 h-2 rounded-full transition-all duration-300",
+                  activeIndex === index 
+                    ? "bg-black w-6" 
+                    : "bg-black/20 hover:bg-black/40"
+                )}
+                aria-label={`Go to feature ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

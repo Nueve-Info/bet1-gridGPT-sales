@@ -93,45 +93,25 @@ export const pipeline = {
 
 export const gridGptFeatures = [
   {
-    badge: "100+ sources scanned in seconds",
-    headline: "not a database but an engine",
-    points: [
-      "an inside man",
-      "getting smarter with each search",
-    ],
+    title: "100+ sources scanned in seconds",
     description:
       "Stop paying per record. Search as many prospects as you need – because GridGPT delivers it live from public sources and your CRM.",
-    mediaAlt: "GridGPT engine visualization",
+    mediaAlt: "GridGPT scanning visualization",
   },
   {
-    badge: "100+ sources scanned in seconds",
-    headline: "not a database but an engine",
-    points: [
-      "an inside man",
-      "getting smarter with each search",
-    ],
+    title: "not a database but an engine",
     description:
       "Save days on prospecting: don't search – just describe who you want to reach, and let AI pick the best-fit companies and titles.",
-    mediaAlt: "GridGPT search demonstration",
+    mediaAlt: "GridGPT engine demonstration",
   },
   {
-    badge: "500+ sources scanned in seconds",
-    headline: "not a database but an engine",
-    points: [
-      "data you won't find on google",
-      "getting smarter with each search",
-    ],
+    title: "an inside man",
     description:
-      "Every search result is explained: why this company, why this person, what recent signal makes them a good fit.",
+      "Every search result is explained: why this company, why this person, what recent signal makes them a good fit for your offer.",
     mediaAlt: "GridGPT insights panel",
   },
   {
-    badge: "100+ sources scanned in seconds",
-    headline: "not a database but an engine",
-    points: [
-      "an inside man",
-      "getting smarter with each search",
-    ],
+    title: "getting smarter with each search",
     description:
       "GridGPT learns what works: every reply, every booked meeting feeds back into ranking so your next list is even better.",
     mediaAlt: "GridGPT learning visualization",
