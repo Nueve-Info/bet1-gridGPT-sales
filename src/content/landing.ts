@@ -13,24 +13,24 @@ export const siteConfig = {
 
 export const navigation = {
   logo: "GridGPT",
-  ctaText: "CTA",
+  ctaText: "Save your spot",
   ctaHref: "#waitlist",
 };
 
 export const hero = {
   headline: "Access decision makers in seconds",
   subheadline:
-    "Find unique contact details and in-depth company data to make B2B sales always hit the best prospects. Automated.",
-  primaryCta: "See how it works",
+    "Find unique contact details and in-depth company data to make sure you always hit the most promising prospects. Automated.",
+  primaryCta: "Save your spot",
   primaryCtaHref: "#features",
   secondaryCta: "Join waitlist",
   secondaryCtaHref: "#waitlist",
 };
 
 export const valueProposition = {
-  headline: "Every data you need for sales outreach in one place",
+  headline: "Every data you need for sales outreach, matched with ICP",
   description:
-    "Access all sales data from over 100+ sources with a single search on a 24-hour delay.",
+    "Access lead details from over 30+ sources and find the most promising ones with simple interface or AI text chat.",
   stats: [
     { value: "$299M", label: "Verified company data" },
     { value: "100+", label: "Data sources" },
@@ -53,13 +53,9 @@ export const valueProposition = {
 };
 
 export const saveHours = {
-  headline: "Save hours wasted on research",
+  headline: "Access contact details you can’t just google",
   description:
-    "Focus on sales and outreach. AI finds data and curates it for you.",
-  stat: {
-    value: "65.8%",
-    label: "of sales reps' time is spent on non-selling activities like research",
-  },
+    "Billion records scanned live to give you direct access to decision makers.",
   chartLabels: {
     prospecting: "prospecting",
     selling: "selling",
@@ -67,7 +63,7 @@ export const saveHours = {
 };
 
 export const pipeline = {
-  headline: "Billion records scanned live to deliver actionable leads list",
+  headline: "Turn generic leads into actionable fitting  list of prospects",
   columns: [
     {
       title: "Easy searching",
@@ -93,28 +89,32 @@ export const pipeline = {
 
 export const gridGptFeatures = [
   {
-    title: "100+ sources scanned in seconds",
+    title: "a message hub",
     description:
-      "Stop paying per record. Search as many prospects as you need – because GridGPT delivers it live from public sources and your CRM.",
+      "Sent emails, linkedIn and whatsapp messages directly in GridGPT panel. Supported with custom hooks based on prospect’s business context and your offer.",
     mediaAlt: "GridGPT scanning visualization",
+    videoUrl: "https://player.vimeo.com/video/1153677864?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&background=1",
   },
   {
-    title: "not a database but an engine",
+    title: "easiest and smartest leads searching",
     description:
-      "Save days on prospecting: don't search – just describe who you want to reach, and let AI pick the best-fit companies and titles.",
+      "Describe your ideal customer and watch list filtering itself. No scrolling, no checkboxes.",
     mediaAlt: "GridGPT engine demonstration",
+    videoUrl: "https://player.vimeo.com/video/1153684565?h=7bab07205b&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&background=1",
   },
   {
-    title: "an inside man",
+    title: "data you won’t find on google",
     description:
-      "Every search result is explained: why this company, why this person, what recent signal makes them a good fit for your offer.",
+      "Data you won’t find anywhere else. Phones and emails that can’t be simply “googled”",
     mediaAlt: "GridGPT insights panel",
+    videoUrl: "https://player.vimeo.com/video/1153677864?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&background=1",
   },
   {
     title: "getting smarter with each search",
     description:
-      "GridGPT learns what works: every reply, every booked meeting feeds back into ranking so your next list is even better.",
+      "GridGPT iterates based on your feedback to make sure each next lead list is better",
     mediaAlt: "GridGPT learning visualization",
+    videoUrl: "https://player.vimeo.com/video/1153677864?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&background=1",
   },
 ];
 
@@ -196,27 +196,22 @@ export const faq = {
     {
       question: "How is GridGPT different from other sales intelligence tools?",
       answer:
-        "Unlike traditional databases that charge per record and go stale, GridGPT is a live search engine. It scans 100+ sources in real-time to deliver fresh, relevant prospects every search. You pay for unlimited searches, not per lead.",
+        "Sales intelligence tools primarily provide data (contacts, firmographics, signals). GridGPT focuses on the next step: turning that context into outbound-ready execution—structured insights, angles, and message drafts you can reuse across sequences, without losing consistency or quality.",
     },
     {
       question: "What data sources does GridGPT use?",
       answer:
-        "GridGPT aggregates data from public company websites, LinkedIn, news outlets, job boards, SEC filings, funding announcements, and over 100 other sources. All data is collected in compliance with terms of service and privacy regulations.",
-    },
-    {
-      question: "How accurate is the contact information?",
-      answer:
-        "We verify emails and phone numbers through multiple validation layers. Our average email deliverability rate is over 95%. Invalid contacts are automatically flagged and removed from results.",
+        "GridGPT can work with the data you already have (CRM fields, lead lists, enrichment outputs) and commonly used public/company signals (e.g., website, LinkedIn-level company info, job posts, news/announcements). The idea is simple: pull relevant context into one place so it’s usable for outreach.",
     },
     {
       question: "Can I integrate GridGPT with my CRM?",
       answer:
-        "Yes! GridGPT integrates with Salesforce, HubSpot, Pipedrive, and other major CRMs. Leads sync automatically with all enrichment data attached, so your team can start outreach immediately.",
+        "Yes! GridGPT is designed to fit into existing workflows. You can typically connect or sync via standard CRM exports/imports and common automation tools (e.g., Zapier/Make), so lead context and notes can flow between GridGPT and your CRM with minimal friction.",
     },
     {
-      question: "Is there a free trial?",
+      question: "How does GridGPT help with outbound?",
       answer:
-        "We're currently in private beta. Join the waitlist to get early access and a free trial when we launch. Early adopters will also receive priority support and input on our roadmap.",
+        "It shortens the path from “lead list” to “send.” GridGPT organizes key insights in one place and helps you craft strong first lines, angles, and follow-ups based on real context.",
     },
   ],
 };

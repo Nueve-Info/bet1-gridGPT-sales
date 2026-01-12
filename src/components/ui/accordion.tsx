@@ -77,7 +77,7 @@ AccordionItem.displayName = "AccordionItem";
 interface AccordionTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const AccordionTrigger = React.forwardRef<HTMLButtonElement, AccordionTriggerProps>(
-  ({ className, children, ...props }, ref) => {
+  ({ className, children, onClick, ...props }, ref) => {
     const accordionContext = React.useContext(AccordionContext);
     const itemContext = React.useContext(AccordionItemContext);
     
@@ -87,21 +87,26 @@ const AccordionTrigger = React.forwardRef<HTMLButtonElement, AccordionTriggerPro
     const { value } = itemContext;
     const isOpen = accordionContext.openItems.includes(value);
 
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      accordionContext.toggle(value);
+      onClick?.(e);
+    };
+
     return (
       <h3 className="flex">
         <button
           ref={ref}
           type="button"
-          onClick={() => accordionContext.toggle(value)}
+          onClick={handleClick}
           aria-expanded={isOpen}
           className={cn(
-            "flex flex-1 items-center justify-between py-4 text-left font-medium transition-all hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+            "flex flex-1 items-center justify-between py-4 text-left font-medium transition-all hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer w-full",
             className
           )}
           data-state={isOpen ? "open" : "closed"}
           {...props}
         >
-          {children}
+          <span className="flex-1 pr-4">{children}</span>
           <ChevronDown
             className={cn(
               "h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200",
@@ -121,6 +126,8 @@ const AccordionContent = React.forwardRef<HTMLDivElement, AccordionContentProps>
   ({ className, children, ...props }, ref) => {
     const accordionContext = React.useContext(AccordionContext);
     const itemContext = React.useContext(AccordionItemContext);
+    const contentRef = React.useRef<HTMLDivElement>(null);
+    const [height, setHeight] = React.useState<string>("0px");
     
     if (!accordionContext) throw new Error("AccordionContent must be used within Accordion");
     if (!itemContext) throw new Error("AccordionContent must be used within AccordionItem");
@@ -128,11 +135,31 @@ const AccordionContent = React.forwardRef<HTMLDivElement, AccordionContentProps>
     const { value } = itemContext;
     const isOpen = accordionContext.openItems.includes(value);
 
-    if (!isOpen) return null;
+    React.useEffect(() => {
+      if (contentRef.current) {
+        if (isOpen) {
+          const scrollHeight = contentRef.current.scrollHeight;
+          setHeight(`${scrollHeight}px`);
+        } else {
+          setHeight("0px");
+        }
+      }
+    }, [isOpen, children]);
 
     return (
-      <div ref={ref} className={cn("overflow-hidden text-sm", className)} {...props}>
-        <div className="pb-4 pt-0">{children}</div>
+      <div
+        ref={ref}
+        className={cn(
+          "overflow-hidden text-sm transition-[max-height,opacity] duration-300 ease-in-out",
+          isOpen ? "opacity-100" : "opacity-0",
+          className
+        )}
+        style={{ maxHeight: height }}
+        {...props}
+      >
+        <div ref={contentRef} className="pb-4 pt-0">
+          {children}
+        </div>
       </div>
     );
   }

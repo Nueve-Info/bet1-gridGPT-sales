@@ -2,6 +2,7 @@ import { useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { finalCta } from "@/content/landing";
+import projectFeedback from "../../assets/project feedback.png";
 import { submitWaitlist } from "@/lib/waitlist";
 import { track } from "@/lib/analytics";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
@@ -60,12 +61,16 @@ export function FinalCta() {
     >
       <div className="container mx-auto px-4 md:px-6">
         {/* Main CTA Container with gradient and shadow */}
-        <div className="max-w-6xl mx-auto rounded-3xl bg-gradient-to-br from-blue-50 via-blue-50/50 to-green-50 shadow-xl p-8 md:p-12 lg:p-16">
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Side - Placeholder */}
+        <div className="max-w-6xl mx-auto rounded-3xl bg-gradient-to-br from-blue-50 via-blue-50/50 to-green-50 shadow-xl p-8 md:p-10 lg:p-16">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
+            {/* Left Side - Image */}
             <div className="relative flex items-center justify-center order-2 md:order-1">
-              <div className="w-full max-w-md aspect-[4/3] bg-white rounded-lg border border-gray-200 flex items-center justify-center">
-                <div className="text-gray-400 text-sm">Placeholder</div>
+              <div className="w-full max-w-md bg-white rounded-lg border border-gray-200 flex items-center justify-center overflow-hidden shadow-sm">
+                <img 
+                  src={projectFeedback} 
+                  alt="AI agent analyzing table data" 
+                  className="w-full h-auto object-cover"
+                />
               </div>
             </div>
 
@@ -76,12 +81,12 @@ export function FinalCta() {
                 id="final-cta-heading"
                 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 leading-tight"
               >
-                Your leads are waiting for you. Get to know them!
+                Turn your lead list into a sales asset - not a liability.
               </h2>
 
               {/* Description */}
               <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-                Sign up for a waitlist. Be the first to boost your outreach game.
+              If your sales team spends too much time researching instead of selling, this is for you.
               </p>
 
               {/* Form */}
@@ -99,7 +104,7 @@ export function FinalCta() {
               ) : (
                 <form
                   onSubmit={handleSubmit}
-                  className="flex flex-col sm:flex-row gap-3"
+                  className="flex flex-col lg:flex-row gap-3"
                   noValidate
                 >
                   {/* Honeypot field - hidden from real users */}
@@ -116,7 +121,7 @@ export function FinalCta() {
                     />
                   </div>
 
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0 lg:min-w-[200px]">
                     <label htmlFor="email" className="sr-only">
                       Email address
                     </label>
@@ -130,7 +135,7 @@ export function FinalCta() {
                       disabled={status === "loading"}
                       aria-describedby={status === "error" ? "email-error" : undefined}
                       aria-invalid={status === "error"}
-                      className="h-12 rounded-lg border-gray-300 bg-white"
+                      className="h-12 w-full rounded-lg border-gray-300 bg-white"
                       required
                     />
                   </div>
@@ -139,7 +144,7 @@ export function FinalCta() {
                     type="submit"
                     disabled={status === "loading"}
                     data-analytics="form:waitlist_submit"
-                    className="h-12 px-6 rounded-lg bg-black text-white hover:bg-gray-800 min-w-[140px]"
+                    className="h-12 px-6 rounded-lg bg-black text-white hover:bg-gray-800 w-full lg:w-auto lg:min-w-[140px] lg:flex-shrink-0"
                   >
                     {status === "loading" ? (
                       <>

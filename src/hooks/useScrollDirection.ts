@@ -25,9 +25,8 @@ export function useScrollDirection<T extends HTMLElement = HTMLDivElement>(
   const activeIndexRef = useRef(0);
   const lastScrollTop = useRef(0);
   const isUserControlled = useRef(false);
-  const controlTimeout = useRef<NodeJS.Timeout | null>(null);
+  const controlTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastUpdateTime = useRef(0);
-  const lastWheelTime = useRef(0);
   const scrollAccumulator = useRef(0); // Akumulator scrolla
   const lastTabChangeTime = useRef(0); // Czas ostatniej zmiany tabu
 
@@ -95,8 +94,7 @@ export function useScrollDirection<T extends HTMLElement = HTMLDivElement>(
       // Oblicz pozycję scrolla względem sekcji (0-1)
       // Używamy środka viewport jako punktu odniesienia
       const viewportCenter = scrollTop + viewportHeight / 2;
-      const relativePosition = (viewportCenter - elementTop) / elementHeight;
-      const scrollProgress = Math.max(0, Math.min(1, relativePosition));
+      // (wcześniej liczyliśmy tu scrollProgress 0-1, ale nie był używany)
 
       // Określ kierunek scrollowania
       const currentScrollTop = scrollTop;
@@ -157,7 +155,6 @@ export function useScrollDirection<T extends HTMLElement = HTMLDivElement>(
       const currentActiveIndex = activeIndexRef.current;
       const elementRect = element.getBoundingClientRect();
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const elementTop = elementRect.top + scrollTop;
       const elementBottom = elementRect.bottom + scrollTop;
       const viewportBottom = scrollTop + window.innerHeight;
       
