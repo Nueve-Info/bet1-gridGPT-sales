@@ -276,7 +276,7 @@ export function SaveHours() {
       className={`py-16 md:py-24 ${useRevealClass(isVisible)}`}
       aria-labelledby="save-hours-heading"
     >
-      <div className="container mx-auto px-6 md:px-12 lg:px-16">
+      <div className="container mx-auto px-8 md:px-16 lg:px-24">
         <div className="flex flex-col gap-8 lg:gap-12">
           {/* Text & Stat */}
           <div className="space-y-6">

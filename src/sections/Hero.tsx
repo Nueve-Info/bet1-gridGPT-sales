@@ -32,7 +32,7 @@ export function Hero() {
           "linear-gradient(to bottom, rgba(255,255,255,0) 0%, #ffffff 100%), linear-gradient(to right, #F1F7FD, #D9F4E6)",
       }}
     >
-      <div className="container mx-auto px-6 md:px-12 lg:px-16">
+      <div className="container mx-auto px-8 md:px-16 lg:px-24">
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
           {/* Text Content */}
           <div className="flex flex-col space-y-6 relative z-10">

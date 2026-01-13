@@ -398,7 +398,7 @@ export function GridGptFeatures() {
         {/* top-16 = 64px (wysokość headera), h-[calc(100vh-4rem)] aby zmieścić się pod headerem */}
         <div className="sticky top-16 h-[calc(100vh-4rem)] flex flex-col z-10">
           {/* Header */}
-          <div className="container mx-auto px-6 md:px-12 lg:px-16 py-4 md:py-6">
+          <div className="container mx-auto px-8 md:px-16 lg:px-24 py-4 md:py-6">
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 md:mb-6">
               GridGPT is
             </h2>
