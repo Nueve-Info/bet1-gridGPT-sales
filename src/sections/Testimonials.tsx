@@ -66,7 +66,7 @@ export function Testimonials() {
                       <div className="mb-4 flex items-center gap-3 shrink-0">
                         {/* Avatar Icon */}
                         <div
-                          className="w-12 h-12 rounded-full shrink-0 flex items-center justify-center bg-muted"
+                          className="w-12 h-12 rounded-full shrink-0 flex items-center justify-center bg-gradient-to-r from-[#F1F7FD] to-[#D9F4E6]"
                           role="img"
                           aria-label={`${testimonial.author}'s avatar`}
                         >
