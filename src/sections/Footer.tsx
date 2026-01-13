@@ -3,7 +3,7 @@ import { navigation, footer } from "@/content/landing";
 export function Footer() {
   return (
     <footer className="border-t py-8 md:py-12">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-6 md:px-12 lg:px-16">
         <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
           {/* Logo */}
           <a

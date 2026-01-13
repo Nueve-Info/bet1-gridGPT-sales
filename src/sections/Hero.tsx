@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { hero } from "@/content/landing";
 import { track } from "@/lib/analytics";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
-import dashboardImg from "../../assets/dashboard.png";
+import { useEffect } from "react";
 
 export function Hero() {
   const { ref, isVisible } = useReveal();
@@ -10,6 +10,17 @@ export function Hero() {
   const handlePrimaryClick = () => {
     track("cta:hero_primary");
   };
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://player.vimeo.com/api/player.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <section
@@ -21,7 +32,7 @@ export function Hero() {
           "linear-gradient(to bottom, rgba(255,255,255,0) 0%, #ffffff 100%), linear-gradient(to right, #F1F7FD, #D9F4E6)",
       }}
     >
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-6 md:px-12 lg:px-16">
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
           {/* Text Content */}
           <div className="flex flex-col space-y-6 relative z-10">
@@ -46,20 +57,23 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Media with Animation */}
-          <div className="relative w-full perspective-[1000px]">
+          {/* Media */}
+          <div className="relative w-full">
              {/* Grid background effect */}
              <div className="absolute inset-0 -z-10 bg-grid-black opacity-40 rounded-full blur-3xl transform scale-150" />
              
-            <div className="animate-float-modern relative rounded-xl border bg-background/50 p-1 shadow-2xl backdrop-blur-sm ring-1 ring-border/50 transition-transform duration-500 hover:scale-[1.01]">
-              <img
-                src={dashboardImg}
-                alt="GridGPT Dashboard Preview"
-                className="rounded-lg w-full h-auto shadow-inner bg-muted"
-                width={1200}
-                height={675}
-                loading="eager"
-              />
+            <div className="relative rounded-xl border bg-background/50 p-1 shadow-2xl backdrop-blur-sm ring-1 ring-border/50">
+              <div style={{ padding: "55.3% 0 0 0", position: "relative" }}>
+                <iframe
+                  src="https://player.vimeo.com/video/1154013732?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1"
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                  title="table-sales"
+                  className="rounded-lg"
+                />
+              </div>
               {/* Decorative glow */}
               <div className="absolute -inset-4 -z-10 bg-gradient-to-tr from-primary/10 to-secondary/10 opacity-60 blur-2xl rounded-[2rem]" />
               

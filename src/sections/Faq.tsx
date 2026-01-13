@@ -21,7 +21,7 @@ export function Faq() {
       className={`py-16 md:py-24 bg-muted/30 ${useRevealClass(isVisible)}`}
       aria-labelledby="faq-heading"
     >
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-6 md:px-12 lg:px-16">
         <div className="max-w-3xl mx-auto">
           {/* Section Header */}
           <h2

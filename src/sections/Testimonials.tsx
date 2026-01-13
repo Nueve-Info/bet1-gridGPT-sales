@@ -29,14 +29,21 @@ export function Testimonials() {
       className={`relative w-full py-24 md:py-32 bg-muted/30 z-0 ${useRevealClass(isVisible)}`}
       aria-labelledby="testimonials-heading"
     >
-      <div className="container mx-auto px-4 md:px-6 w-full overflow-x-hidden">
+      <div className="container mx-auto px-6 md:px-12 lg:px-16 w-full overflow-x-hidden">
         {/* Section Header */}
-        <h2
-          id="testimonials-heading"
-          className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl mb-12"
-        >
-          {testimonials.headline}
-        </h2>
+        <div className="text-center mb-12">
+          <h2
+            id="testimonials-heading"
+            className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl mb-4"
+          >
+            {testimonials.headline}
+          </h2>
+          {testimonials.description && (
+            <p className="text-muted-foreground md:text-lg max-w-2xl mx-auto">
+              {testimonials.description}
+            </p>
+          )}
+        </div>
 
         {/* Testimonials Carousel - automatyczna karuzela */}
         <div className="relative overflow-hidden">
@@ -59,7 +66,7 @@ export function Testimonials() {
                       <div className="mb-4 flex items-center gap-3 shrink-0">
                         {/* Avatar Icon */}
                         <div
-                          className="w-12 h-12 rounded-full shrink-0 flex items-center justify-center bg-muted"
+                          className="w-12 h-12 rounded-full shrink-0 flex items-center justify-center bg-gradient-to-r from-[#F1F7FD] to-[#D9F4E6]"
                           role="img"
                           aria-label={`${testimonial.author}'s avatar`}
                         >

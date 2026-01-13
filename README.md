@@ -1,4 +1,29 @@
-# React + TypeScript + Vite
+# GridGPT Sales Landing Page
+
+Landing page dla GridGPT z integracją Zapier do zarządzania listą oczekujących.
+
+## Konfiguracja
+
+### Zmienne środowiskowe
+
+Projekt wymaga skonfigurowania zmiennych środowiskowych. Utwórz plik `.env` w głównym katalogu projektu:
+
+```bash
+# Zapier Webhook Configuration
+VITE_ZAPIER_WEBHOOK_URL=https://hooks.zapier.com/hooks/catch/your-webhook-id-here/
+```
+
+#### Jak uzyskać URL webhooka Zapier:
+
+1. Zaloguj się do [Zapier](https://zapier.com)
+2. Utwórz nowy Zap lub edytuj istniejący
+3. Dodaj trigger: **Webhooks by Zapier** > **Catch Hook**
+4. Skopiuj wygenerowany URL webhooka
+5. Wklej URL do pliku `.env` jako wartość `VITE_ZAPIER_WEBHOOK_URL`
+
+**Uwaga:** Plik `.env` jest ignorowany przez git (zawiera wrażliwe dane). Nie commituj go do repozytorium.
+
+## Development
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

@@ -59,7 +59,7 @@ export function FinalCta() {
       className={`py-16 md:py-24 ${useRevealClass(isVisible)}`}
       aria-labelledby="final-cta-heading"
     >
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-6 md:px-12 lg:px-16">
         {/* Main CTA Container with gradient and shadow */}
         <div className="max-w-6xl mx-auto rounded-3xl bg-gradient-to-br from-blue-50 via-blue-50/50 to-green-50 shadow-xl p-8 md:p-10 lg:p-16">
           <div className="grid md:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
@@ -94,12 +94,23 @@ export function FinalCta() {
                 <div
                   ref={messageRef}
                   tabIndex={-1}
-                  className="flex flex-col items-start gap-4 p-6 rounded-lg bg-white/80 backdrop-blur-sm border border-gray-200"
+                  className="flex flex-col items-start gap-4 p-6 md:p-8 rounded-xl bg-gradient-to-br from-green-50 to-blue-50 border-2 border-green-200 shadow-lg"
                   role="status"
                   aria-live="polite"
                 >
-                  <CheckCircle2 className="w-12 h-12 text-green-600" />
-                  <p className="font-medium text-gray-900">{finalCta.successMessage}</p>
+                  <div className="flex items-center gap-3">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                      <CheckCircle2 className="w-7 h-7 text-green-600" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-lg font-semibold text-gray-900 leading-tight">
+                        {finalCta.successMessage}
+                      </p>
+                      <p className="text-sm text-gray-600 mt-1">
+                        Check your email for confirmation details.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <form

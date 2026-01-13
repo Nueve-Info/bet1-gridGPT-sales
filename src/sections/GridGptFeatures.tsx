@@ -151,18 +151,16 @@ function StackCards() {
                      )}
                   </div>
                   
-                  <div className="flex-1 min-w-0 text-left">
-                    <div className={`font-semibold mb-1 truncate transition-all duration-700 ${isCenter ? 'text-lg' : 'text-base'}`}>
+                  <div className="flex-1 min-w-0 text-left h-[72px] flex flex-col justify-center">
+                    <div className={`font-semibold truncate transition-all duration-700 ${isCenter ? 'text-lg' : 'text-base'}`}>
                       {card.name}
                     </div>
                     <div className={`truncate transition-all duration-700 ${isCenter ? 'text-base opacity-90' : 'text-sm text-muted-foreground'}`}>
                       {card.detail}
                     </div>
-                    {card.contact && (
-                      <div className={`text-xs mt-2 truncate font-mono transition-all duration-700 ${isCenter ? 'opacity-75' : 'text-muted-foreground/70'}`}>
-                        {card.contact}
-                      </div>
-                    )}
+                    <div className={`text-xs truncate font-mono transition-all duration-700 h-4 ${isCenter ? 'opacity-75' : 'text-muted-foreground/70'}`}>
+                      {card.contact || '\u00A0'}
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -183,9 +181,6 @@ function FeatureContentPanel({ feature, activeIndex }: { feature: Feature; activ
   return (
     <div className="h-full flex flex-col justify-center p-6 md:p-8 lg:p-10 space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
       <div>
-        <h3 className="text-sm font-medium text-white/60 mb-2 uppercase tracking-wider">
-          Description
-        </h3>
         <p className="text-base md:text-lg text-white leading-relaxed max-w-lg">
           {feature.description}
         </p>
@@ -236,88 +231,133 @@ function useStickyTabScroll(itemCount: number) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const activeIndexRef = useRef(0);
-  const scrollAccumulator = useRef(0);
   const lastTabChangeTime = useRef(0);
+  const isTransitioning = useRef(false);
+  const pendingDirection = useRef<'up' | 'down' | null>(null);
+  const rafId = useRef<number | null>(null);
 
   useEffect(() => {
     activeIndexRef.current = activeIndex;
   }, [activeIndex]);
 
   const handleTabClick = useCallback((index: number) => {
+    if (isTransitioning.current) return;
+    
     setActiveIndex(index);
     activeIndexRef.current = index;
     lastTabChangeTime.current = Date.now();
+    isTransitioning.current = true;
+    
+    // Krótki cooldown po kliknięciu
+    setTimeout(() => {
+      isTransitioning.current = false;
+    }, 300);
   }, []);
 
   useEffect(() => {
+    // Sprawdź prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
     if (!containerRef.current) return;
 
     const container = containerRef.current;
+    const COOLDOWN_MS = prefersReducedMotion ? 100 : 400; // Dłuższy cooldown dla płynności
+    const HEADER_HEIGHT = 64; // 4rem = 64px
+    
+    const processTabChange = (direction: 'up' | 'down') => {
+      const now = Date.now();
+      const currentIndex = activeIndexRef.current;
+      
+      // Sprawdź cooldown
+      if (now - lastTabChangeTime.current < COOLDOWN_MS) {
+        return false;
+      }
+      
+      if (isTransitioning.current) {
+        return false;
+      }
+      
+      let newIndex: number;
+      
+      if (direction === 'down') {
+        if (currentIndex >= itemCount - 1) return false;
+        newIndex = currentIndex + 1;
+      } else {
+        if (currentIndex <= 0) return false;
+        newIndex = currentIndex - 1;
+      }
+      
+      isTransitioning.current = true;
+      lastTabChangeTime.current = now;
+      
+      setActiveIndex(newIndex);
+      activeIndexRef.current = newIndex;
+      
+      // Reset transition flag po zakończeniu animacji
+      setTimeout(() => {
+        isTransitioning.current = false;
+        pendingDirection.current = null;
+      }, COOLDOWN_MS);
+      
+      return true;
+    };
     
     const handleWheel = (e: WheelEvent) => {
       const rect = container.getBoundingClientRect();
       
-      // Sprawdź czy sekcja jest w widoku (sticky powinna być aktywna)
-      // Sekcja jest sticky gdy górna krawędź jest na górze lub powyżej viewportu,
-      // a dolna krawędź jest poniżej viewportu
-      const isSectionInView = rect.top <= 0 && rect.bottom >= window.innerHeight;
+      // Precyzyjniejsze sprawdzenie czy sticky jest aktywny
+      // Sticky jest aktywny gdy górna krawędź kontenera dotknęła headera
+      // i dolna krawędź jest poniżej dolnej krawędzi viewportu
+      const stickyTop = HEADER_HEIGHT;
+      const isStickyActive = rect.top <= stickyTop && rect.bottom > window.innerHeight;
       
-      if (!isSectionInView) {
-        scrollAccumulator.current = 0;
-        return; // Pozwól na normalny scroll
+      if (!isStickyActive) {
+        return; // Normalny scroll
       }
 
       const currentIndex = activeIndexRef.current;
+      const direction = e.deltaY > 0 ? 'down' : 'up';
       
-      // Jeśli na ostatnim tabie i scrollujemy w dół - pozwól wyjść z sekcji
-      if (currentIndex === itemCount - 1 && e.deltaY > 0) {
-        scrollAccumulator.current = 0;
+      // Pozwól wyjść z sekcji na krawędziach
+      if (currentIndex === itemCount - 1 && direction === 'down') {
         return;
       }
       
-      // Jeśli na pierwszym tabie i scrollujemy w górę - pozwól wyjść z sekcji
-      if (currentIndex === 0 && e.deltaY < 0) {
-        scrollAccumulator.current = 0;
+      if (currentIndex === 0 && direction === 'up') {
         return;
       }
 
-      // Blokuj normalny scroll i akumuluj dla zmiany tabów
+      // Blokuj scroll wewnątrz sekcji
       e.preventDefault();
+      e.stopPropagation();
       
-      const now = Date.now();
-      const MIN_SCROLL_DELTA = 50;
-      const MIN_TIME_BETWEEN_CHANGES = 200;
-      
-      scrollAccumulator.current += Math.abs(e.deltaY);
-      
-      if (now - lastTabChangeTime.current < MIN_TIME_BETWEEN_CHANGES) {
+      // Ignoruj bardzo małe delta (np. touchpad inertia na końcu)
+      if (Math.abs(e.deltaY) < 5) {
         return;
       }
       
-      if (scrollAccumulator.current < MIN_SCROLL_DELTA) {
-        return;
+      // Użyj requestAnimationFrame dla płynności
+      if (rafId.current) {
+        cancelAnimationFrame(rafId.current);
       }
       
-      scrollAccumulator.current = 0;
-      lastTabChangeTime.current = now;
+      pendingDirection.current = direction;
       
-      if (e.deltaY > 0) {
-        // Scroll w dół - następny tab
-        const newIndex = Math.min(itemCount - 1, currentIndex + 1);
-        setActiveIndex(newIndex);
-        activeIndexRef.current = newIndex;
-      } else {
-        // Scroll w górę - poprzedni tab
-        const newIndex = Math.max(0, currentIndex - 1);
-        setActiveIndex(newIndex);
-        activeIndexRef.current = newIndex;
-      }
+      rafId.current = requestAnimationFrame(() => {
+        if (pendingDirection.current) {
+          processTabChange(pendingDirection.current);
+        }
+        rafId.current = null;
+      });
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
     
     return () => {
       window.removeEventListener("wheel", handleWheel);
+      if (rafId.current) {
+        cancelAnimationFrame(rafId.current);
+      }
     };
   }, [itemCount]);
 
@@ -358,7 +398,7 @@ export function GridGptFeatures() {
         {/* top-16 = 64px (wysokość headera), h-[calc(100vh-4rem)] aby zmieścić się pod headerem */}
         <div className="sticky top-16 h-[calc(100vh-4rem)] flex flex-col z-10">
           {/* Header */}
-          <div className="container mx-auto px-4 md:px-6 py-4 md:py-6">
+          <div className="container mx-auto px-6 md:px-12 lg:px-16 py-4 md:py-6">
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 md:mb-6">
               GridGPT is
             </h2>

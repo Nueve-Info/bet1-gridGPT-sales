@@ -65,11 +65,13 @@ export async function submitWaitlist(data: WaitlistData): Promise<WaitlistResult
   }
 
   try {
-    const response = await fetch(webhookUrl, {
+    // Use no-cors mode for Zapier webhooks to bypass CORS restrictions.
+    // Webhooks don't need to read the response, so this is safe.
+    // Note: In no-cors mode, we can't use custom headers or read the response.
+    // Zapier webhooks accept JSON data without explicit Content-Type header.
+    await fetch(webhookUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      mode: "no-cors",
       body: JSON.stringify({
         email: trimmedEmail,
         timestamp: new Date().toISOString(),
@@ -77,10 +79,8 @@ export async function submitWaitlist(data: WaitlistData): Promise<WaitlistResult
       }),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
+    // With no-cors, we assume success if no error was thrown.
+    // The webhook will receive the data even if we can't verify the response.
     return {
       success: true,
       message: "You're on the list! We'll be in touch soon.",

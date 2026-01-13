@@ -89,28 +89,36 @@ export const pipeline = {
 
 export const gridGptFeatures = [
   {
-    title: "a message hub",
+    title: "A message hub",
     description:
       "Sent emails, linkedIn and whatsapp messages directly in GridGPT panel. Supported with custom hooks based on prospect’s business context and your offer.",
     mediaAlt: "GridGPT scanning visualization",
+    details: [
+      "Wysyłaj wiadomości bezpośrednio z panelu GridGPT",
+      "Integracja z email, LinkedIn i WhatsApp w jednym miejscu",
+      "Automatyczne dopasowanie treści do kontekstu biznesowego leada",
+      "Personalizowane hooki bazujące na ofercie i profilu firmy",
+      "Śledzenie statusu wiadomości i odpowiedzi w czasie rzeczywistym",
+      "Zarządzanie całym procesem outreachu w jednej platformie",
+    ],
     videoUrl: "https://player.vimeo.com/video/1153677864?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&background=1",
   },
   {
-    title: "easiest and smartest leads searching",
+    title: "Easiest and smartest leads searching",
     description:
       "Describe your ideal customer and watch list filtering itself. No scrolling, no checkboxes.",
     mediaAlt: "GridGPT engine demonstration",
     videoUrl: "https://player.vimeo.com/video/1153684565?h=7bab07205b&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&background=1",
   },
   {
-    title: "data you won’t find on google",
+    title: "Data you won’t find on google",
     description:
       "Data you won’t find anywhere else. Phones and emails that can’t be simply “googled”",
     mediaAlt: "GridGPT insights panel",
     videoUrl: "https://player.vimeo.com/video/1153677864?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&background=1",
   },
   {
-    title: "getting smarter with each search",
+    title: "Getting smarter with each search",
     description:
       "GridGPT iterates based on your feedback to make sure each next lead list is better",
     mediaAlt: "GridGPT learning visualization",
@@ -119,7 +127,8 @@ export const gridGptFeatures = [
 ];
 
 export const testimonials = {
-  headline: "Testimonials",
+  headline: "Customer testimonials",
+  description: "Discover how our engine transforms outreach for founders and sales teams.",
   items: [
     {
       quote:
@@ -181,9 +190,9 @@ export const testimonials = {
 };
 
 export const finalCta = {
-  headline: "Turn your lead list into a sales asset – not a liability.",
+  headline: "Turn your lead list into a sales asset.",
   description:
-    "If your sales team spends too much time researching instead of selling, this is for you.",
+    "If you are spending too much time researching instead of selling, this is for you.",
   placeholder: "Enter your email",
   buttonText: "Submit",
   successMessage: "You're on the list! We'll be in touch soon.",
