@@ -53,7 +53,7 @@ export function ValueProposition() {
       className={`py-24 md:py-32 bg-white ${useRevealClass(isVisible)}`}
       aria-labelledby="value-heading"
     >
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-6 md:px-12 lg:px-16">
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
           {/* Left Column - Text */}
           <div className="space-y-6">
@@ -69,8 +69,8 @@ export function ValueProposition() {
           </div>
 
           {/* Right Column - Stack Cards */}
-          <div className="relative h-[350px] flex items-center justify-center">
-            <div className="relative w-full max-w-sm mx-auto h-[250px] flex items-center justify-center">
+          <div className="relative h-[500px] flex items-center justify-center">
+            <div className="relative w-full max-w-md mx-auto h-[400px] flex items-center justify-center">
               {stackCards.map((card, index) => {
                 // Obliczanie wizualnego indeksu
                 const visualIndex = (index + activeIndex) % stackCards.length;
@@ -80,7 +80,7 @@ export function ValueProposition() {
                 const isCenter = visualIndex === centerIndex;
                 const dist = Math.abs(visualIndex - centerIndex);
                 
-                const yOffset = (visualIndex - centerIndex) * 65; 
+                const yOffset = (visualIndex - centerIndex) * 90; 
                 const scale = 1 - (dist * 0.1);
                 const zIndex = 30 - (dist * 10);
                 
@@ -108,11 +108,11 @@ export function ValueProposition() {
                       zIndex: zIndex,
                       transform: `translateY(${yOffset}px) scale(${scale})`,
                       opacity: opacity,
-                      maxWidth: '320px',
+                      maxWidth: '450px',
                       background: isCenter ? 'linear-gradient(to right, #F1F7FD, #D9F4E6)' : undefined
                     }}
                   >
-                    <CardContent className="p-6">
+                    <CardContent className="p-8">
                       <div className="flex items-start gap-4">
                         <div
                           className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors duration-700 ${iconBgClass}`}

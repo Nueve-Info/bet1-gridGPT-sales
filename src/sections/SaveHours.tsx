@@ -130,112 +130,115 @@ function PipelineFrameFromFigma() {
       </div>
 
       {/* Tablet and Desktop layout: horizontal grid */}
-      <div className="hidden sm:grid gap-4 md:gap-6 lg:gap-8 grid-cols-[1fr_auto_1fr_auto_1fr] items-start">
-        {/* Left: Data monitoring */}
-        <div className="space-y-4 md:space-y-6 lg:space-y-8">
-          <div className="h-12 md:h-14 lg:h-16 flex items-start">
-            <p className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold text-foreground leading-tight">
-              Data monitoring
-            </p>
+      <div className="hidden sm:grid gap-4 md:gap-6 lg:gap-8 grid-cols-[1fr_auto_1fr] items-start">
+        {/* Left column: Data monitoring + Lead matching enrichment (1/2 width) */}
+        <div className="grid gap-4 md:gap-6 lg:gap-8 grid-cols-[1fr_auto_1fr] items-start">
+          {/* Data monitoring */}
+          <div className="space-y-4 md:space-y-6 lg:space-y-8">
+            <div className="h-12 md:h-14 lg:h-16 flex items-start">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold text-foreground leading-tight">
+                Data monitoring
+              </p>
+            </div>
+            <div className="space-y-3 md:space-y-4 lg:space-y-5">
+              <div className="flex items-center gap-2 md:gap-3 lg:gap-4 rounded-lg border bg-background px-3 py-2.5 md:px-4 md:py-3 lg:px-5 lg:py-4 text-sm md:text-base lg:text-lg">
+                <Building2
+                  className="size-4 md:size-5 lg:size-6 text-muted-foreground flex-shrink-0"
+                  aria-hidden="true"
+                />
+                <span className="break-words">Financial context</span>
+              </div>
+              <div className="flex items-center gap-2 md:gap-3 lg:gap-4 rounded-lg border bg-background px-3 py-2.5 md:px-4 md:py-3 lg:px-5 lg:py-4 text-sm md:text-base lg:text-lg">
+                <Linkedin
+                  className="size-4 md:size-5 lg:size-6 text-muted-foreground flex-shrink-0"
+                  aria-hidden="true"
+                />
+                <span className="break-words">Social media</span>
+              </div>
+              <div className="flex items-center gap-2 md:gap-3 lg:gap-4 rounded-lg border bg-background px-3 py-2.5 md:px-4 md:py-3 lg:px-5 lg:py-4 text-sm md:text-base lg:text-lg">
+                <Newspaper
+                  className="size-4 md:size-5 lg:size-6 text-muted-foreground flex-shrink-0"
+                  aria-hidden="true"
+                />
+                <span className="break-words">News, publications, reports</span>
+              </div>
+              <div className="flex items-center gap-2 md:gap-3 lg:gap-4 rounded-lg border bg-background px-3 py-2.5 md:px-4 md:py-3 lg:px-5 lg:py-4 text-sm md:text-base lg:text-lg">
+                <Database
+                  className="size-4 md:size-5 lg:size-6 text-muted-foreground flex-shrink-0"
+                  aria-hidden="true"
+                />
+                <span className="break-words">Non-public databases</span>
+              </div>
+            </div>
           </div>
-          <div className="space-y-3 md:space-y-4 lg:space-y-5">
-            <div className="flex items-center gap-2 md:gap-3 lg:gap-4 rounded-lg border bg-background px-3 py-2.5 md:px-4 md:py-3 lg:px-5 lg:py-4 text-sm md:text-base lg:text-lg">
-              <Building2
-                className="size-4 md:size-5 lg:size-6 text-muted-foreground flex-shrink-0"
-                aria-hidden="true"
-              />
-              <span className="break-words">Financial context</span>
+
+          {/* Arrow */}
+          <div className="flex items-center justify-center px-1 md:px-2 self-center">
+            <ChevronRight
+              className="size-4 md:size-5 lg:size-6 xl:size-7 text-muted-foreground/50 animate-arrow-pulse transition-colors duration-300"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
+          </div>
+
+          {/* Lead matching enrichment */}
+          <div className="flex flex-col items-center gap-4 md:gap-6 lg:gap-8 text-center">
+            <div className="h-12 md:h-14 lg:h-16 flex items-start justify-center">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold text-foreground leading-tight">
+                Lead matching enrichment
+              </p>
             </div>
-            <div className="flex items-center gap-2 md:gap-3 lg:gap-4 rounded-lg border bg-background px-3 py-2.5 md:px-4 md:py-3 lg:px-5 lg:py-4 text-sm md:text-base lg:text-lg">
-              <Linkedin
-                className="size-4 md:size-5 lg:size-6 text-muted-foreground flex-shrink-0"
-                aria-hidden="true"
-              />
-              <span className="break-words">Social media</span>
-            </div>
-            <div className="flex items-center gap-2 md:gap-3 lg:gap-4 rounded-lg border bg-background px-3 py-2.5 md:px-4 md:py-3 lg:px-5 lg:py-4 text-sm md:text-base lg:text-lg">
-              <Newspaper
-                className="size-4 md:size-5 lg:size-6 text-muted-foreground flex-shrink-0"
-                aria-hidden="true"
-              />
-              <span className="break-words">News, publications, reports</span>
-            </div>
-            <div className="flex items-center gap-2 md:gap-3 lg:gap-4 rounded-lg border bg-background px-3 py-2.5 md:px-4 md:py-3 lg:px-5 lg:py-4 text-sm md:text-base lg:text-lg">
-              <Database
-                className="size-4 md:size-5 lg:size-6 text-muted-foreground flex-shrink-0"
-                aria-hidden="true"
-              />
-              <span className="break-words">Non-public databases</span>
+
+            {/* Logo */}
+            <img
+              src={logotypSvg}
+              alt="GridGPT Logo"
+              className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 xl:w-28 xl:h-28"
+            />
+
+            <p className="text-base md:text-lg lg:text-xl xl:text-2xl font-semibold tracking-tight">
+              GridGPT
+            </p>
+
+            <div className="w-full max-w-[240px] md:max-w-[280px] lg:max-w-[320px] xl:max-w-[360px] space-y-3 md:space-y-4 lg:space-y-5">
+              <div
+                className="rounded-lg border border-foreground/10 px-3 py-2.5 md:px-4 md:py-3 lg:px-5 lg:py-4 text-sm md:text-base lg:text-lg font-medium text-foreground"
+                style={{
+                  background: "linear-gradient(to right, #F1F7FD, #D9F4E6)",
+                }}
+              >
+                Personas or ICP
+              </div>
+              <div
+                className="rounded-lg border border-foreground/10 px-3 py-2.5 md:px-4 md:py-3 lg:px-5 lg:py-4 text-sm md:text-base lg:text-lg font-medium text-foreground"
+                style={{
+                  background: "linear-gradient(to right, #F1F7FD, #D9F4E6)",
+                }}
+              >
+                Your offer
+              </div>
+              <div
+                className="rounded-lg border border-foreground/10 px-3 py-2.5 md:px-4 md:py-3 lg:px-5 lg:py-4 text-sm md:text-base lg:text-lg font-medium text-foreground"
+                style={{
+                  background: "linear-gradient(to right, #F1F7FD, #D9F4E6)",
+                }}
+              >
+                Your CRM
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Arrow 1 */}
+        {/* Arrow between left column and right column */}
         <div className="flex items-center justify-center px-1 md:px-2 self-center">
           <ChevronRight
-            className="size-4 md:size-5 lg:size-6 xl:size-7 text-muted-foreground/50"
+            className="size-4 md:size-5 lg:size-6 xl:size-7 text-muted-foreground/50 animate-arrow-pulse-delayed transition-colors duration-300"
             strokeWidth={1.5}
             aria-hidden="true"
           />
         </div>
 
-        {/* Middle: Lead matching enrichment */}
-        <div className="flex flex-col items-center gap-4 md:gap-6 lg:gap-8 text-center">
-          <div className="h-12 md:h-14 lg:h-16 flex items-start justify-center">
-            <p className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold text-foreground leading-tight">
-              Lead matching enrichment
-            </p>
-          </div>
-
-          {/* Logo */}
-          <img
-            src={logotypSvg}
-            alt="GridGPT Logo"
-            className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 xl:w-28 xl:h-28"
-          />
-
-          <p className="text-base md:text-lg lg:text-xl xl:text-2xl font-semibold tracking-tight">
-            GridGPT
-          </p>
-
-          <div className="w-full max-w-[240px] md:max-w-[280px] lg:max-w-[320px] xl:max-w-[360px] space-y-3 md:space-y-4 lg:space-y-5">
-            <div
-              className="rounded-lg border border-foreground/10 px-3 py-2.5 md:px-4 md:py-3 lg:px-5 lg:py-4 text-sm md:text-base lg:text-lg font-medium text-foreground"
-              style={{
-                background: "linear-gradient(to right, #F1F7FD, #D9F4E6)",
-              }}
-            >
-              Personas or ICP
-            </div>
-            <div
-              className="rounded-lg border border-foreground/10 px-3 py-2.5 md:px-4 md:py-3 lg:px-5 lg:py-4 text-sm md:text-base lg:text-lg font-medium text-foreground"
-              style={{
-                background: "linear-gradient(to right, #F1F7FD, #D9F4E6)",
-              }}
-            >
-              Your offer
-            </div>
-            <div
-              className="rounded-lg border border-foreground/10 px-3 py-2.5 md:px-4 md:py-3 lg:px-5 lg:py-4 text-sm md:text-base lg:text-lg font-medium text-foreground"
-              style={{
-                background: "linear-gradient(to right, #F1F7FD, #D9F4E6)",
-              }}
-            >
-              Your CRM
-            </div>
-          </div>
-        </div>
-
-        {/* Arrow 2 */}
-        <div className="flex items-center justify-center px-1 md:px-2 self-center">
-          <ChevronRight
-            className="size-4 md:size-5 lg:size-6 xl:size-7 text-muted-foreground/50"
-            strokeWidth={1.5}
-            aria-hidden="true"
-          />
-        </div>
-
-        {/* Right: List of B2B prospects */}
+        {/* Right column: List of B2B prospects (1/2 width) */}
         <div className="space-y-4 md:space-y-6 lg:space-y-8">
           <div className="space-y-1 md:space-y-2">
             <div className="h-12 md:h-14 lg:h-16 flex items-start">
@@ -273,7 +276,7 @@ export function SaveHours() {
       className={`py-16 md:py-24 ${useRevealClass(isVisible)}`}
       aria-labelledby="save-hours-heading"
     >
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-6 md:px-12 lg:px-16">
         <div className="flex flex-col gap-8 lg:gap-12">
           {/* Text & Stat */}
           <div className="space-y-6">

@@ -246,3 +246,54 @@
     animation: scroll 120s linear infinite;
   }
 }
+
+/* Arrow flow animation - shows sequential steps */
+@keyframes arrow-flow {
+  0% {
+    opacity: 0.3;
+    transform: scale(1) translateX(0);
+  }
+  12% {
+    opacity: 1;
+    transform: scale(1.25) translateX(4px);
+  }
+  24% {
+    opacity: 1;
+    transform: scale(1.25) translateX(4px);
+  }
+  36% {
+    opacity: 0.9;
+    transform: scale(1.15) translateX(2px);
+  }
+  48% {
+    opacity: 0.6;
+    transform: scale(1.05) translateX(1px);
+  }
+  60% {
+    opacity: 0.3;
+    transform: scale(1) translateX(0);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(1) translateX(0);
+  }
+}
+
+.animate-arrow-pulse {
+  animation: arrow-flow 10s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-arrow-pulse-delayed {
+  animation: arrow-flow 10s ease-in-out infinite;
+  animation-delay: 5s;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-arrow-pulse,
+  .animate-arrow-pulse-delayed {
+    animation: none;
+    opacity: 0.5;
+  }
+}

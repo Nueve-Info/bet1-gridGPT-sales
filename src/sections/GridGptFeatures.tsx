@@ -183,9 +183,6 @@ function FeatureContentPanel({ feature, activeIndex }: { feature: Feature; activ
   return (
     <div className="h-full flex flex-col justify-center p-6 md:p-8 lg:p-10 space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
       <div>
-        <h3 className="text-sm font-medium text-white/60 mb-2 uppercase tracking-wider">
-          Description
-        </h3>
         <p className="text-base md:text-lg text-white leading-relaxed max-w-lg">
           {feature.description}
         </p>
@@ -358,7 +355,7 @@ export function GridGptFeatures() {
         {/* top-16 = 64px (wysokość headera), h-[calc(100vh-4rem)] aby zmieścić się pod headerem */}
         <div className="sticky top-16 h-[calc(100vh-4rem)] flex flex-col z-10">
           {/* Header */}
-          <div className="container mx-auto px-4 md:px-6 py-4 md:py-6">
+          <div className="container mx-auto px-6 md:px-12 lg:px-16 py-4 md:py-6">
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 md:mb-6">
               GridGPT is
             </h2>

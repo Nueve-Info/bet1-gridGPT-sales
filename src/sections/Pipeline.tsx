@@ -10,7 +10,7 @@ export function Pipeline() {
       className={`py-16 md:py-24 bg-background ${useRevealClass(isVisible)}`}
       aria-labelledby="pipeline-heading"
     >
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-6 md:px-12 lg:px-16">
         {/* Section Header */}
         <div className="text-center space-y-4 mb-12">
           <h2
@@ -24,24 +24,25 @@ export function Pipeline() {
         {/* Video */}
         <div className="w-full">
           <div
-            className="w-full rounded-lg bg-muted overflow-hidden"
+            className="w-full overflow-hidden"
             role="img"
             aria-label="Video"
           >
-            <div style={{ padding: "42.02% 0 0 0", position: "relative" }}>
+            <div style={{ padding: "51.5% 0 0 0", position: "relative" }}>
               <iframe
-                src="https://player.vimeo.com/video/1153677560?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1"
+                src="https://player.vimeo.com/video/1154021254?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1"
                 frameBorder="0"
                 allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
                 style={{
                   position: "absolute",
                   top: 0,
-                  left: "-2px",
-                  width: "calc(100% + 2px)",
+                  left: 0,
+                  width: "100%",
                   height: "100%",
+                  border: "none",
                 }}
-                title="process"
+                title="sales data process"
               />
             </div>
           </div>
