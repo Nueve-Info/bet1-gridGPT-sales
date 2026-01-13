@@ -59,7 +59,7 @@ export function FinalCta() {
       className={`py-16 md:py-24 ${useRevealClass(isVisible)}`}
       aria-labelledby="final-cta-heading"
     >
-      <div className="container mx-auto px-6 md:px-12 lg:px-16">
+      <div className="container mx-auto px-8 md:px-16 lg:px-24">
         {/* Main CTA Container with gradient and shadow */}
         <div className="max-w-6xl mx-auto rounded-3xl bg-gradient-to-br from-blue-50 via-blue-50/50 to-green-50 shadow-xl p-8 md:p-10 lg:p-16">
           <div className="grid md:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
