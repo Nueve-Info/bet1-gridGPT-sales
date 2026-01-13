@@ -1,32 +1,15 @@
-import {
-  Header,
-  Hero,
-  ValueProposition,
-  SaveHours,
-  Pipeline,
-  GridGptFeatures,
-  Testimonials,
-  FinalCta,
-  Faq,
-  Footer,
-} from "@/sections";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Landing } from "@/pages/Landing";
+import { Terms } from "@/pages/Terms";
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main id="main-content" className="flex-1">
-        <Hero />
-        <ValueProposition />
-        <Pipeline />
-        <SaveHours />
-        <GridGptFeatures />
-        <Testimonials />
-        <FinalCta />
-        <Faq />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/terms" element={<Terms />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
