@@ -25,30 +25,55 @@ export function Hero() {
   return (
     <section
       ref={ref}
-      className={`py-16 md:py-24 lg:py-32 ${useRevealClass(isVisible)} overflow-hidden`}
+      className={`min-h-screen flex flex-col justify-center pt-28 ${useRevealClass(isVisible)} overflow-hidden`}
       aria-labelledby="hero-heading"
       style={{
         background:
           "linear-gradient(to bottom, rgba(255,255,255,0) 0%, #ffffff 100%), linear-gradient(to right, #F1F7FD, #D9F4E6)",
       }}
     >
-      <div className="container mx-auto px-8 md:px-16 lg:px-24">
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
-          {/* Text Content */}
-          <div className="flex flex-col space-y-6 relative z-10">
+      <div className="container mx-auto px-8 md:px-16 lg:px-24 flex-1 flex flex-col justify-center">
+        <div className="flex flex-col items-center text-center space-y-8">
+          {/* Text Content - Centered */}
+          <div className="flex flex-col space-y-4 max-w-3xl">
             <h1
               id="hero-heading"
               className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
             >
               {hero.headline}
             </h1>
-            <p className="text-lg text-muted-foreground md:text-xl max-w-[600px]">
+            <p className="text-lg text-muted-foreground md:text-xl mx-auto max-w-[700px]">
               {hero.subheadline}
             </p>
-            <div className="flex flex-col gap-3 sm:flex-row">
+            
+            {/* Users count */}
+            <div className="flex items-center justify-center gap-3 text-muted-foreground">
+              <div className="flex items-center -space-x-4">
+                <img
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces"
+                  alt="User avatar"
+                  className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces"
+                  alt="User avatar"
+                  className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=faces"
+                  alt="User avatar"
+                  className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                />
+              </div>
+              <span className="text-sm md:text-base">600+ users loving it</span>
+            </div>
+
+            {/* CTA Button */}
+            <div className="flex justify-center pt-2">
               <Button
                 asChild
                 size="lg"
+                className="bg-black text-white hover:bg-black/90 shadow-lg"
                 data-analytics="cta:hero_primary"
                 data-gtm="cta_waitlist"
                 data-cta-type="waitlist"
@@ -60,11 +85,8 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Media */}
-          <div className="relative w-full">
-             {/* Grid background effect */}
-             <div className="absolute inset-0 -z-10 bg-grid-black opacity-40 rounded-full blur-3xl transform scale-150" />
-             
+          {/* Media - Video iframe below text */}
+          <div className="relative w-full max-w-6xl mt-8 md:mt-12">
             <div className="relative rounded-xl border bg-background/50 p-1 shadow-2xl backdrop-blur-sm ring-1 ring-border/50">
               <div style={{ padding: "55.3% 0 0 0", position: "relative" }}>
                 <iframe
@@ -79,9 +101,6 @@ export function Hero() {
               </div>
               {/* Decorative glow */}
               <div className="absolute -inset-4 -z-10 bg-gradient-to-tr from-primary/10 to-secondary/10 opacity-60 blur-2xl rounded-[2rem]" />
-              
-              {/* Grid overlay for "modern tech" feel */}
-               <div className="absolute inset-0 pointer-events-none rounded-lg bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_70%)]" />
             </div>
           </div>
         </div>
