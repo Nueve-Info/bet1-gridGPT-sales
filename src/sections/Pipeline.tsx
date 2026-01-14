@@ -1,5 +1,7 @@
 import { pipeline } from "@/content/landing";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
+import Lottie from "lottie-react";
+import animationData from "../../assets/sales-process.json";
 
 export function Pipeline() {
   const { ref, isVisible } = useReveal();
@@ -21,30 +23,18 @@ export function Pipeline() {
           </h2>
         </div>
 
-        {/* Video */}
+        {/* Lottie Animation */}
         <div className="w-full">
           <div
             className="w-full overflow-hidden"
             role="img"
-            aria-label="Video"
+            aria-label="Sales data process animation"
           >
-            <div style={{ padding: "51.5% 0 0 0", position: "relative" }}>
-              <iframe
-                src="https://player.vimeo.com/video/1154021254?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1"
-                frameBorder="0"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  border: "none",
-                }}
-                title="sales data process"
-              />
-            </div>
+            <Lottie
+              animationData={animationData}
+              loop={true}
+              autoplay={true}
+            />
           </div>
         </div>
       </div>

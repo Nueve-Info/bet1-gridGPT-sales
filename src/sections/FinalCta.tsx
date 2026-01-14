@@ -2,11 +2,12 @@ import { useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { finalCta } from "@/content/landing";
-import projectFeedback from "../../assets/project feedback.png";
 import { submitWaitlist } from "@/lib/waitlist";
 import { track } from "@/lib/analytics";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import Lottie from "lottie-react";
+import animationData from "../../assets/sales-project-table.json";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
@@ -87,13 +88,14 @@ export function FinalCta() {
         {/* Main CTA Container with gradient and shadow */}
         <div className="max-w-6xl mx-auto rounded-3xl bg-gradient-to-br from-blue-50 via-blue-50/50 to-green-50 shadow-xl p-8 md:p-10 lg:p-16">
           <div className="grid md:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
-            {/* Left Side - Image */}
+            {/* Left Side - Lottie Animation */}
             <div className="relative flex items-center justify-center order-2 md:order-1">
               <div className="w-full max-w-md bg-white rounded-lg border border-gray-200 flex items-center justify-center overflow-hidden shadow-sm">
-                <img 
-                  src={projectFeedback} 
-                  alt="AI agent analyzing table data" 
-                  className="w-full h-auto object-cover"
+                <Lottie
+                  animationData={animationData}
+                  loop={true}
+                  autoplay={true}
+                  aria-label="AI agent analyzing table data"
                 />
               </div>
             </div>
