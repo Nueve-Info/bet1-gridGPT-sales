@@ -24,6 +24,9 @@ export function Header() {
         <Button
           asChild
           data-analytics="cta:header_primary"
+          data-gtm="cta_waitlist"
+          data-cta-type="waitlist"
+          data-cta-placement="nav"
           onClick={handleCtaClick}
         >
           <a href={navigation.ctaHref}>{navigation.ctaText}</a>
