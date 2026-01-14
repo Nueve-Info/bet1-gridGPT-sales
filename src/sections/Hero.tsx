@@ -50,6 +50,9 @@ export function Hero() {
                 asChild
                 size="lg"
                 data-analytics="cta:hero_primary"
+                data-gtm="cta_waitlist"
+                data-cta-type="waitlist"
+                data-cta-placement="hero"
                 onClick={handlePrimaryClick}
               >
                 <a href={hero.primaryCtaHref}>{hero.primaryCta}</a>
