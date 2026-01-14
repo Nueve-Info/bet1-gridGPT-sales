@@ -81,12 +81,12 @@ export function FinalCta() {
                 id="final-cta-heading"
                 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 leading-tight"
               >
-                Turn your lead list into a sales asset - not a liability.
+                Turn your leads list into a sales asset.
               </h2>
 
               {/* Description */}
               <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-              If your sales team spends too much time researching instead of selling, this is for you.
+              If you are spending too much time researching instead of selling, this is for you.
               </p>
 
               {/* Form */}
