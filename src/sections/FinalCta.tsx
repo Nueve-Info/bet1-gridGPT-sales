@@ -57,7 +57,7 @@ export function FinalCta() {
           } else if (result.message.includes("try again") || result.message.includes("went wrong")) {
             errorType = "network";
           }
-          
+
           window.dataLayer.push({
             event: "waitlist_signup_error",
             form_id: "waitlist_cta",

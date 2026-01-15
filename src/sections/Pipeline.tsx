@@ -1,7 +1,7 @@
 import { pipeline } from "@/content/landing";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
 import Lottie from "lottie-react";
-import animationData from "../../assets/sales-process.json";
+import animationData from "../../assets/sales-table-process.json";
 
 export function Pipeline() {
   const { ref, isVisible } = useReveal();
@@ -21,6 +21,9 @@ export function Pipeline() {
           >
             {pipeline.headline}
           </h2>
+          <p className="text-muted-foreground text-lg">
+            Billion records scanned live to give you direct access to decision makers.
+          </p>
         </div>
 
         {/* Lottie Animation */}

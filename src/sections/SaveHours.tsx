@@ -3,6 +3,7 @@ import { useReveal, useRevealClass } from "@/hooks/useReveal";
 import { ChevronRight, Building2, Linkedin, Newspaper, Database } from "lucide-react";
 import logotypSvg from "../../assets/logotyp.svg";
 
+
 function PipelineFrameFromFigma() {
   return (
     <div

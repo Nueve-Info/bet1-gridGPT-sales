@@ -53,33 +53,37 @@ function FeatureNavButton({
   isActive,
   onClick,
   buttonRef,
+  index,
+  totalCount,
 }: {
   feature: Feature;
   isActive: boolean;
   onClick: () => void;
   buttonRef?: (el: HTMLButtonElement | null) => void;
+  index: number;
+  totalCount: number;
 }) {
+  const isFirst = index === 0;
+  const isLast = index === totalCount - 1;
+  
   return (
     <button
       ref={buttonRef}
       onClick={onClick}
       className={cn(
-        "w-full text-left p-4 md:p-5 transition-all duration-300 group relative border-b border-border last:border-0 flex-1",
+        "w-full text-left p-4 md:p-5 transition-all duration-300 group relative flex-1",
         isActive
-          ? "bg-black text-white border-b-black"
-          : "bg-transparent text-foreground hover:bg-muted/30"
+          ? "bg-white text-foreground border-b border-border last:border-0"
+          : "bg-transparent text-muted-foreground hover:bg-muted/30",
+        // Dodaj delikatny border dla aktywnej karty, ale nie na pierwszym i ostatnim tabie
+        isActive && !isFirst && !isLast && "border-l border-r border-border/50"
       )}
       aria-selected={isActive}
       role="tab"
     >
-      {/* Active Indicator Arrow (Desktop) - Optional visual flair */}
-      {isActive && (
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-4 h-4 bg-black rotate-45 hidden lg:block z-10" />
-      )}
-      
       <span className={cn(
         "text-lg md:text-xl font-bold leading-tight block transition-colors duration-300",
-        isActive ? "text-white" : "text-foreground group-hover:text-foreground/80"
+        isActive ? "text-foreground" : "text-muted-foreground group-hover:text-muted-foreground/80"
       )}>
         {feature.title}
       </span>
@@ -181,7 +185,7 @@ function FeatureContentPanel({ feature, activeIndex }: { feature: Feature; activ
   return (
     <div className="h-full flex flex-col justify-center p-6 md:p-8 lg:p-10 space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
       <div>
-        <p className="text-base md:text-lg text-white leading-relaxed max-w-lg">
+        <p className="text-base md:text-lg text-foreground leading-relaxed max-w-lg">
           {feature.description}
         </p>
       </div>
@@ -190,7 +194,7 @@ function FeatureContentPanel({ feature, activeIndex }: { feature: Feature; activ
       {isDataCardsFeature ? (
         <StackCards />
       ) : isFeedbackFeature ? (
-        <div className="w-full bg-black rounded-lg border border-white/10 relative overflow-hidden">
+        <div className="w-full bg-black rounded-lg border border-border relative overflow-hidden">
           <div style={{ padding: '61.43% 0 0 0', position: 'relative' }}>
             <iframe 
               src="https://player.vimeo.com/video/1153677926?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1" 
@@ -204,7 +208,7 @@ function FeatureContentPanel({ feature, activeIndex }: { feature: Feature; activ
         </div>
       ) : (
         <div 
-          className="w-full aspect-video bg-black rounded-lg border border-white/10 relative overflow-hidden group"
+          className="w-full aspect-video bg-black rounded-lg border border-border relative overflow-hidden group"
           role="img" 
           aria-label={feature.mediaAlt}
         >
@@ -419,12 +423,14 @@ export function GridGptFeatures() {
                       buttonRef={(el) => {
                         buttonRefs.current[index] = el;
                       }}
+                      index={index}
+                      totalCount={gridGptFeatures.length}
                     />
                   ))}
                 </div>
 
                 {/* Right Column: Content */}
-                <div className="w-full lg:w-2/3 bg-black text-white relative flex-1">
+                <div className="w-full lg:w-2/3 bg-white text-foreground relative flex-1">
                   <FeatureContentPanel 
                     key={activeIndex} 
                     feature={activeFeature}
