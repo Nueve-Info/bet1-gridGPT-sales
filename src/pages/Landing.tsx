@@ -2,7 +2,6 @@ import {
   Header,
   Hero,
   ValueProposition,
-  SaveHours,
   Pipeline,
   GridGptFeatures,
   Testimonials,
@@ -19,7 +18,6 @@ export function Landing() {
         <Hero />
         <ValueProposition />
         <Pipeline />
-        <SaveHours />
         <GridGptFeatures />
         <Testimonials />
         <FinalCta />

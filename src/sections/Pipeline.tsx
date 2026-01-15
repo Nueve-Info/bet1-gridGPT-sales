@@ -9,7 +9,7 @@ export function Pipeline() {
   return (
     <section
       ref={ref}
-      className={`py-16 md:py-24 bg-background ${useRevealClass(isVisible)}`}
+      className={`pt-16 md:pt-24 pb-32 md:pb-48 bg-background ${useRevealClass(isVisible)}`}
       aria-labelledby="pipeline-heading"
     >
       <div className="container mx-auto px-8 md:px-16 lg:px-24">

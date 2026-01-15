@@ -81,7 +81,7 @@ export function FinalCta() {
     <section
       id="waitlist"
       ref={ref}
-      className={`py-16 md:py-24 ${useRevealClass(isVisible)}`}
+      className={`py-32 md:py-48 ${useRevealClass(isVisible)}`}
       aria-labelledby="final-cta-heading"
     >
       <div className="container mx-auto px-8 md:px-16 lg:px-24">

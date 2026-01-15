@@ -1,7 +1,6 @@
 export { Header } from "./Header";
 export { Hero } from "./Hero";
 export { ValueProposition } from "./ValueProposition";
-export { SaveHours } from "./SaveHours";
 export { Pipeline } from "./Pipeline";
 export { GridGptFeatures } from "./GridGptFeatures";
 export { Testimonials } from "./Testimonials";

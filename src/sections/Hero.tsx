@@ -27,7 +27,7 @@ export function Hero() {
   return (
     <section
       ref={ref}
-      className={`min-h-screen flex flex-col justify-center pt-28 ${useRevealClass(
+      className={`min-h-screen flex flex-col justify-center pt-28 pb-16 md:pb-24 ${useRevealClass(
         isVisible
       )} overflow-hidden`}
       aria-labelledby="hero-heading"

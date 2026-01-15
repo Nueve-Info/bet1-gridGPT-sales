@@ -396,7 +396,7 @@ export function GridGptFeatures() {
     <section
       id="features"
       aria-label="GridGPT Features"
-      className={cn("relative bg-background z-10", useRevealClass(isVisible))}
+      className={cn("relative bg-background z-10 pb-32 md:pb-48", useRevealClass(isVisible))}
       ref={revealRef}
     >
       {/*
