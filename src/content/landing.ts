@@ -13,7 +13,7 @@ export const siteConfig = {
 
 export const navigation = {
   logo: "GridGPT",
-  ctaText: "Save your spot",
+  ctaText: "Join the waitlist",
   ctaHref: "#waitlist",
 };
 
@@ -21,7 +21,7 @@ export const hero = {
   headline: "Access decision makers in seconds",
   subheadline:
     "Find unique contact details and in-depth company data to make sure you always hit the most promising prospects. Automated.",
-  primaryCta: "Save your spot",
+  primaryCta: "Join the waitlist",
   primaryCtaHref: "#waitlist",
   secondaryCta: "Join waitlist",
   secondaryCtaHref: "#waitlist",
@@ -219,7 +219,6 @@ export const faq = {
 export const footer = {
   copyright: `© ${new Date().getFullYear()} GridGPT. All rights reserved.`,
   links: [
-    { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
   ],
 };
