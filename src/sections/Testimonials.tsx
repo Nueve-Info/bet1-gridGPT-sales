@@ -53,7 +53,7 @@ export function Testimonials() {
                 const isExpanded = expandedCards.has(index);
                 // Sprawdzamy czy tekst jest dłuższy niż ~5 linii (około 250-300 znaków)
                 const hasLongText = testimonial.quote.length > 250;
-                
+
                 return (
                   <Card
                     key={index}
@@ -76,11 +76,6 @@ export function Testimonials() {
                           <div className="font-medium text-base">
                             {testimonial.author}
                           </div>
-                          {testimonial.role && testimonial.company && (
-                            <div className="text-sm text-muted-foreground">
-                              {testimonial.role}, {testimonial.company}
-                            </div>
-                          )}
                         </div>
                       </div>
 

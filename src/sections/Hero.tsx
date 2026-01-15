@@ -29,7 +29,7 @@ export function Hero() {
       aria-labelledby="hero-heading"
       style={{
         background:
-          "linear-gradient(to bottom, rgba(255,255,255,0) 0%, #ffffff 100%), linear-gradient(to right, #F1F7FD, #D9F4E6)",
+          "linear-gradient(to bottom, rgba(255,255,255,0) 0%, #ffffff 100%), linear-gradient(to right, #C7d2f5, #F1F7FD, #D9F4E6)",
       }}
     >
       <div className="container mx-auto px-8 md:px-16 lg:px-24 flex-1 flex flex-col justify-center">
@@ -38,42 +38,42 @@ export function Hero() {
           <div className="flex flex-col space-y-4 max-w-3xl">
             <h1
               id="hero-heading"
-              className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
+              className={`text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl ${isVisible ? 'animate-fade-in-up' : ''}`}
             >
               {hero.headline}
             </h1>
-            <p className="text-lg text-muted-foreground md:text-xl mx-auto max-w-[700px]">
+            <p className={`text-lg text-muted-foreground md:text-xl mx-auto max-w-[700px] ${isVisible ? 'animate-fade-in-up-delay-1' : ''}`}>
               {hero.subheadline}
             </p>
             
             {/* Users count */}
-            <div className="flex items-center justify-center gap-3 text-muted-foreground">
+            <div className={`flex items-center justify-center gap-3 text-muted-foreground ${isVisible ? 'animate-fade-in-up-delay-2' : ''}`}>
               <div className="flex items-center -space-x-4">
                 <img
                   src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces"
                   alt="User avatar"
-                  className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                  className="w-8 h-8 rounded-full border-2 border-white object-cover animate-avatar-pulse animate-avatar-float"
                 />
                 <img
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces"
                   alt="User avatar"
-                  className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                  className="w-8 h-8 rounded-full border-2 border-white object-cover animate-avatar-pulse-delay-1 animate-avatar-float"
                 />
                 <img
                   src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=faces"
                   alt="User avatar"
-                  className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                  className="w-8 h-8 rounded-full border-2 border-white object-cover animate-avatar-pulse-delay-2 animate-avatar-float"
                 />
               </div>
               <span className="text-sm md:text-base">600+ users loving it</span>
             </div>
 
             {/* CTA Button */}
-            <div className="flex justify-center pt-2">
+            <div className={`flex justify-center pt-2 ${isVisible ? 'animate-fade-in-up-delay-3' : ''}`}>
               <Button
                 asChild
                 size="lg"
-                className="bg-black text-white hover:bg-black/90 shadow-lg"
+                className="bg-black text-white hover:bg-black/90 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
                 data-analytics="cta:hero_primary"
                 data-gtm="cta_waitlist"
                 data-cta-type="waitlist"
@@ -86,7 +86,7 @@ export function Hero() {
           </div>
 
           {/* Media - Video iframe below text */}
-          <div className="relative w-full max-w-6xl mt-8 md:mt-12">
+          <div className={`relative w-full max-w-6xl mt-8 md:mt-12 ${isVisible ? 'animate-fade-in-up-delay-4' : ''}`}>
             <div className="relative rounded-xl border bg-background/50 p-1 shadow-2xl backdrop-blur-sm ring-1 ring-border/50">
               <div style={{ padding: "55.3% 0 0 0", position: "relative" }}>
                 <iframe
@@ -99,8 +99,8 @@ export function Hero() {
                   className="rounded-lg"
                 />
               </div>
-              {/* Decorative glow */}
-              <div className="absolute -inset-4 -z-10 bg-gradient-to-tr from-primary/10 to-secondary/10 opacity-60 blur-2xl rounded-[2rem]" />
+              {/* Decorative glow with animation */}
+              <div className="absolute -inset-4 -z-10 bg-gradient-to-tr from-primary/10 to-secondary/10 opacity-60 blur-2xl rounded-[2rem] animate-glow-pulse" />
             </div>
           </div>
         </div>
