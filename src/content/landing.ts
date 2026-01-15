@@ -13,7 +13,7 @@ export const siteConfig = {
 
 export const navigation = {
   logo: "GridGPT",
-  ctaText: "Save your spot",
+  ctaText: "Join the waitlist",
   ctaHref: "#waitlist",
 };
 
@@ -21,8 +21,8 @@ export const hero = {
   headline: "Access decision makers in seconds",
   subheadline:
     "Find unique contact details and in-depth company data to make sure you always hit the most promising prospects. Automated.",
-  primaryCta: "Save your spot",
-  primaryCtaHref: "#features",
+  primaryCta: "Join the waitlist",
+  primaryCtaHref: "#waitlist",
   secondaryCta: "Join waitlist",
   secondaryCtaHref: "#waitlist",
 };
@@ -134,57 +134,48 @@ export const testimonials = {
       quote:
         "I'm impressed 😎\n\nSystematized knowledge that can be immediately implemented in daily work, a step-by-step process.\n\nI went through the entire week's material in one evening and can't wait for the next lessons!\n\nFor me, the best part was breaking down headlines into their components, explaining how to understand them, and presenting the 'letter method' 🔥🔥🔥",
       author: "Kinga",
-      role: "",
-      company: "",
     },
     {
       quote:
         "God, great, this is exactly what I don't feel good about, it's great that something like this was created.",
       author: "Sławek",
-      role: "",
-      company: "",
+
     },
     {
       quote:
         "I thought I was already creating good landing pages, but this course made them turbo mega good. 👉 What I remember most is a different perspective on the design process. It completely changed my way of looking at it. Now, creating ideas for a concept goes much faster than before. In addition, a case study taken from life - awesome. I recommend it to everyone. 🔥",
       author: "Wiktoria Wiśniewska",
-      role: "",
-      company: "",
+
     },
     {
       quote:
         "Overall, thanks for this dose of knowledge, valuable time and I am convinced that this is a topic for me to explore further 🥰",
       author: "Kasia Cicho",
-      role: "",
-      company: "",
+
     },
     {
       quote:
         "Super practical — helps you avoid mistakes. Top quality, better than any program I've joined before.",
       author: "Martyna",
-      role: "",
-      company: "",
+
     },
     {
       quote:
         "I also want to add — I forgot to mention — that there's a really good energy and sense of humor in all of this, which makes it easier and more enjoyable to absorb.",
       author: "Klaudi",
-      role: "",
-      company: "",
+
     },
     {
       quote:
         "Loved how everything was explained clearly and practically — perfect program even for beginners.",
       author: "Asia",
-      role: "",
-      company: "",
+
     },
     {
       quote:
         "Exactly what I needed — clear structure, great examples, and everything to start taking action right away.",
       author: "Tomek Sawicki",
-      role: "",
-      company: "",
+
     },
   ],
 };
@@ -228,7 +219,6 @@ export const faq = {
 export const footer = {
   copyright: `© ${new Date().getFullYear()} GridGPT. All rights reserved.`,
   links: [
-    { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
   ],
 };

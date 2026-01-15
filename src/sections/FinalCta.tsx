@@ -2,11 +2,12 @@ import { useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { finalCta } from "@/content/landing";
-import projectFeedback from "../../assets/project feedback.png";
 import { submitWaitlist } from "@/lib/waitlist";
 import { track } from "@/lib/analytics";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import Lottie from "lottie-react";
+import animationData from "../../assets/sales-project-table.json";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
@@ -33,12 +34,36 @@ export function FinalCta() {
       if (result.success) {
         setStatus("success");
         track("form:waitlist_success");
+        // GTM event tracking dla sukcesu
+        if (typeof window !== "undefined" && window.dataLayer) {
+          window.dataLayer.push({
+            event: "waitlist_signup_success",
+            lead_type: "waitlist",
+            form_id: "waitlist_cta"
+          });
+        }
         // Focus on success message for a11y
         setTimeout(() => messageRef.current?.focus(), 100);
       } else {
         setStatus("error");
         setErrorMessage(result.message);
         track("form:waitlist_error", { message: result.message });
+        // GTM event tracking dla błędu
+        if (typeof window !== "undefined" && window.dataLayer) {
+          // Określ typ błędu na podstawie komunikatu
+          let errorType = "server";
+          if (result.message.includes("valid email") || result.message.includes("enter your email")) {
+            errorType = "validation";
+          } else if (result.message.includes("try again") || result.message.includes("went wrong")) {
+            errorType = "network";
+          }
+
+          window.dataLayer.push({
+            event: "waitlist_signup_error",
+            form_id: "waitlist_cta",
+            error_type: errorType
+          });
+        }
         // Focus on error message for a11y
         setTimeout(() => messageRef.current?.focus(), 100);
       }
@@ -56,20 +81,21 @@ export function FinalCta() {
     <section
       id="waitlist"
       ref={ref}
-      className={`py-16 md:py-24 ${useRevealClass(isVisible)}`}
+      className={`py-32 md:py-48 ${useRevealClass(isVisible)}`}
       aria-labelledby="final-cta-heading"
     >
-      <div className="container mx-auto px-6 md:px-12 lg:px-16">
+      <div className="container mx-auto px-8 md:px-16 lg:px-24">
         {/* Main CTA Container with gradient and shadow */}
         <div className="max-w-6xl mx-auto rounded-3xl bg-gradient-to-br from-blue-50 via-blue-50/50 to-green-50 shadow-xl p-8 md:p-10 lg:p-16">
           <div className="grid md:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
-            {/* Left Side - Image */}
+            {/* Left Side - Lottie Animation */}
             <div className="relative flex items-center justify-center order-2 md:order-1">
               <div className="w-full max-w-md bg-white rounded-lg border border-gray-200 flex items-center justify-center overflow-hidden shadow-sm">
-                <img 
-                  src={projectFeedback} 
-                  alt="AI agent analyzing table data" 
-                  className="w-full h-auto object-cover"
+                <Lottie
+                  animationData={animationData}
+                  loop={true}
+                  autoplay={true}
+                  aria-label="AI agent analyzing table data"
                 />
               </div>
             </div>
@@ -81,12 +107,12 @@ export function FinalCta() {
                 id="final-cta-heading"
                 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 leading-tight"
               >
-                Turn your lead list into a sales asset - not a liability.
+                Turn your leads list into a sales asset.
               </h2>
 
               {/* Description */}
               <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-              If your sales team spends too much time researching instead of selling, this is for you.
+              If you are spending too much time researching instead of selling, this is for you.
               </p>
 
               {/* Form */}
@@ -115,6 +141,9 @@ export function FinalCta() {
               ) : (
                 <form
                   onSubmit={handleSubmit}
+                  data-gtm="waitlist_form"
+                  data-form-id="waitlist_cta"
+                  data-form-placement="cta_section"
                   className="flex flex-col lg:flex-row gap-3"
                   noValidate
                 >
@@ -146,6 +175,7 @@ export function FinalCta() {
                       disabled={status === "loading"}
                       aria-describedby={status === "error" ? "email-error" : undefined}
                       aria-invalid={status === "error"}
+                      data-gtm="waitlist_email"
                       className="h-12 w-full rounded-lg border-gray-300 bg-white"
                       required
                     />
@@ -155,6 +185,7 @@ export function FinalCta() {
                     type="submit"
                     disabled={status === "loading"}
                     data-analytics="form:waitlist_submit"
+                    data-gtm="waitlist_submit"
                     className="h-12 px-6 rounded-lg bg-black text-white hover:bg-gray-800 w-full lg:w-auto lg:min-w-[140px] lg:flex-shrink-0"
                   >
                     {status === "loading" ? (

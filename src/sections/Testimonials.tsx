@@ -29,7 +29,7 @@ export function Testimonials() {
       className={`relative w-full py-24 md:py-32 bg-muted/30 z-0 ${useRevealClass(isVisible)}`}
       aria-labelledby="testimonials-heading"
     >
-      <div className="container mx-auto px-6 md:px-12 lg:px-16 w-full overflow-x-hidden">
+      <div className="container mx-auto px-8 md:px-16 lg:px-24 w-full overflow-x-hidden">
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2
@@ -53,7 +53,7 @@ export function Testimonials() {
                 const isExpanded = expandedCards.has(index);
                 // Sprawdzamy czy tekst jest dłuższy niż ~5 linii (około 250-300 znaków)
                 const hasLongText = testimonial.quote.length > 250;
-                
+
                 return (
                   <Card
                     key={index}
@@ -76,11 +76,6 @@ export function Testimonials() {
                           <div className="font-medium text-base">
                             {testimonial.author}
                           </div>
-                          {testimonial.role && testimonial.company && (
-                            <div className="text-sm text-muted-foreground">
-                              {testimonial.role}, {testimonial.company}
-                            </div>
-                          )}
                         </div>
                       </div>
 

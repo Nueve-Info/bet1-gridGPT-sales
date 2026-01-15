@@ -53,7 +53,7 @@ export function ValueProposition() {
       className={`py-24 md:py-32 bg-white ${useRevealClass(isVisible)}`}
       aria-labelledby="value-heading"
     >
-      <div className="container mx-auto px-6 md:px-12 lg:px-16">
+      <div className="container mx-auto px-8 md:px-16 lg:px-24">
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
           {/* Left Column - Text */}
           <div className="space-y-6">
