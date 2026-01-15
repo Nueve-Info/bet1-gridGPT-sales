@@ -3,6 +3,8 @@ import { hero } from "@/content/landing";
 import { track } from "@/lib/analytics";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
 import { useEffect } from "react";
+import Lottie from "lottie-react";
+import animationData from "../../assets/hero-animation.json";
 
 export function Hero() {
   const { ref, isVisible } = useReveal();
@@ -25,7 +27,9 @@ export function Hero() {
   return (
     <section
       ref={ref}
-      className={`min-h-screen flex flex-col justify-center pt-28 ${useRevealClass(isVisible)} overflow-hidden`}
+      className={`min-h-screen flex flex-col justify-center pt-28 ${useRevealClass(
+        isVisible
+      )} overflow-hidden`}
       aria-labelledby="hero-heading"
       style={{
         background:
@@ -38,16 +42,26 @@ export function Hero() {
           <div className="flex flex-col space-y-4 max-w-3xl">
             <h1
               id="hero-heading"
-              className={`text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl ${isVisible ? 'animate-fade-in-up' : ''}`}
+              className={`text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl ${
+                isVisible ? "animate-fade-in-up" : ""
+              }`}
             >
               {hero.headline}
             </h1>
-            <p className={`text-lg text-muted-foreground md:text-xl mx-auto max-w-[700px] ${isVisible ? 'animate-fade-in-up-delay-1' : ''}`}>
+            <p
+              className={`text-lg text-muted-foreground md:text-xl mx-auto max-w-[700px] ${
+                isVisible ? "animate-fade-in-up-delay-1" : ""
+              }`}
+            >
               {hero.subheadline}
             </p>
-            
+
             {/* Users count */}
-            <div className={`flex items-center justify-center gap-3 text-muted-foreground ${isVisible ? 'animate-fade-in-up-delay-2' : ''}`}>
+            <div
+              className={`flex items-center justify-center gap-3 text-muted-foreground ${
+                isVisible ? "animate-fade-in-up-delay-2" : ""
+              }`}
+            >
               <div className="flex items-center -space-x-4">
                 <img
                   src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces"
@@ -69,7 +83,11 @@ export function Hero() {
             </div>
 
             {/* CTA Button */}
-            <div className={`flex justify-center pt-2 ${isVisible ? 'animate-fade-in-up-delay-3' : ''}`}>
+            <div
+              className={`flex justify-center pt-2 ${
+                isVisible ? "animate-fade-in-up-delay-3" : ""
+              }`}
+            >
               <Button
                 asChild
                 size="lg"
@@ -86,19 +104,17 @@ export function Hero() {
           </div>
 
           {/* Media - Video iframe below text */}
-          <div className={`relative w-full max-w-6xl mt-8 md:mt-12 ${isVisible ? 'animate-fade-in-up-delay-4' : ''}`}>
+          <div
+            className={`relative w-full max-w-6xl mt-8 md:mt-12 ${
+              isVisible ? "animate-fade-in-up-delay-4" : ""
+            }`}
+          >
             <div className="relative rounded-xl border bg-background/50 p-1 shadow-2xl backdrop-blur-sm ring-1 ring-border/50">
-              <div style={{ padding: "55.3% 0 0 0", position: "relative" }}>
-                <iframe
-                  src="https://player.vimeo.com/video/1154013732?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1"
-                  frameBorder="0"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-                  title="table-sales"
-                  className="rounded-lg"
-                />
-              </div>
+              <Lottie
+                animationData={animationData}
+                loop={true}
+                autoplay={true}
+              />
               {/* Decorative glow with animation */}
               <div className="absolute -inset-4 -z-10 bg-gradient-to-tr from-primary/10 to-secondary/10 opacity-60 blur-2xl rounded-[2rem] animate-glow-pulse" />
             </div>

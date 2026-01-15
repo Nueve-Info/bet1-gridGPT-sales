@@ -53,39 +53,49 @@ function FeatureNavButton({
   isActive,
   onClick,
   buttonRef,
-  index,
-  totalCount,
 }: {
   feature: Feature;
   isActive: boolean;
   onClick: () => void;
   buttonRef?: (el: HTMLButtonElement | null) => void;
-  index: number;
-  totalCount: number;
 }) {
-  const isFirst = index === 0;
-  const isLast = index === totalCount - 1;
-  
   return (
     <button
       ref={buttonRef}
       onClick={onClick}
       className={cn(
-        "w-full text-left p-4 md:p-5 transition-all duration-300 group relative flex-1",
+        "w-full text-left px-6 md:px-8 transition-colors duration-300 group relative",
+        "flex-1 flex items-center",
+        "border-b border-border/40 last:border-b-0",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
         isActive
-          ? "bg-white text-foreground border-b border-border last:border-0"
-          : "bg-transparent text-muted-foreground hover:bg-muted/30",
-        // Dodaj delikatny border dla aktywnej karty, ale nie na pierwszym i ostatnim tabie
-        isActive && !isFirst && !isLast && "border-l border-r border-border/50"
+          ? "bg-white text-foreground"
+          : "bg-transparent text-muted-foreground hover:bg-muted/50"
       )}
       aria-selected={isActive}
       role="tab"
     >
-      <span className={cn(
-        "text-lg md:text-xl font-bold leading-tight block transition-colors duration-300",
-        isActive ? "text-foreground" : "text-muted-foreground group-hover:text-muted-foreground/80"
-      )}>
-        {feature.title}
+      <span className="flex items-center gap-3">
+        {/* Zielona kropka - widoczna tylko dla aktywnego taba */}
+        <span
+          className={cn(
+            "w-2.5 h-2.5 rounded-full flex-shrink-0 transition-all duration-300",
+            isActive
+              ? "bg-emerald-500 opacity-100"
+              : "bg-transparent opacity-0"
+          )}
+          aria-hidden="true"
+        />
+        <span
+          className={cn(
+            "text-lg md:text-xl font-semibold leading-tight transition-colors duration-300",
+            isActive
+              ? "text-foreground"
+              : "text-muted-foreground group-hover:text-foreground/70"
+          )}
+        >
+          {feature.title}
+        </span>
       </span>
     </button>
   );
@@ -108,13 +118,13 @@ function StackCards() {
         {stackCards.map((card, index) => {
           // Obliczanie wizualnego indeksu
           const visualIndex = (index + activeIndex) % stackCards.length;
-          
+
           // Konfiguracja layoutu
           const centerIndex = 2; // Środkowa karta
           const isCenter = visualIndex === centerIndex;
           const dist = Math.abs(visualIndex - centerIndex);
-          
-          const yOffset = (visualIndex - centerIndex) * 65; 
+
+          const yOffset = (visualIndex - centerIndex) * 65;
           const scale = 1 - (dist * 0.1);
           const zIndex = 30 - (dist * 10);
 
@@ -154,7 +164,7 @@ function StackCards() {
                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                      )}
                   </div>
-                  
+
                   <div className="flex-1 min-w-0 text-left h-[72px] flex flex-col justify-center">
                     <div className={`font-semibold truncate transition-all duration-700 ${isCenter ? 'text-lg' : 'text-base'}`}>
                       {card.name}
@@ -181,9 +191,9 @@ function FeatureContentPanel({ feature, activeIndex }: { feature: Feature; activ
   const isDataCardsFeature = activeIndex === 2;
   // "getting smarter with each search" jest na indeksie 3 (czwarta zakładka)
   const isFeedbackFeature = activeIndex === 3;
-  
+
   return (
-    <div className="h-full flex flex-col justify-center p-6 md:p-8 lg:p-10 space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
+    <div className="h-full flex flex-col justify-start pt-10 md:pt-14 lg:pt-16 px-6 md:px-8 lg:px-10 pb-6 space-y-10 animate-in fade-in slide-in-from-right-4 duration-500">
       <div>
         <p className="text-base md:text-lg text-foreground leading-relaxed max-w-lg">
           {feature.description}
@@ -196,29 +206,29 @@ function FeatureContentPanel({ feature, activeIndex }: { feature: Feature; activ
       ) : isFeedbackFeature ? (
         <div className="w-full bg-black rounded-lg border border-border relative overflow-hidden">
           <div style={{ padding: '61.43% 0 0 0', position: 'relative' }}>
-            <iframe 
-              src="https://player.vimeo.com/video/1153677926?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1" 
-              frameBorder="0" 
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-              referrerPolicy="strict-origin-when-cross-origin" 
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} 
+            <iframe
+              src="https://player.vimeo.com/video/1153677926?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
               title="feedback"
             />
           </div>
         </div>
       ) : (
-        <div 
+        <div
           className="w-full aspect-video bg-black rounded-lg border border-border relative overflow-hidden group"
-          role="img" 
+          role="img"
           aria-label={feature.mediaAlt}
         >
           <div className="absolute inset-0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-          <iframe 
-            src={feature.videoUrl} 
-            frameBorder="0" 
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-            referrerPolicy="strict-origin-when-cross-origin" 
-            className="absolute inset-0 w-full h-full" 
+          <iframe
+            src={feature.videoUrl}
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            className="absolute inset-0 w-full h-full"
             title={feature.mediaAlt}
           />
         </div>
@@ -246,12 +256,12 @@ function useStickyTabScroll(itemCount: number) {
 
   const handleTabClick = useCallback((index: number) => {
     if (isTransitioning.current) return;
-    
+
     setActiveIndex(index);
     activeIndexRef.current = index;
     lastTabChangeTime.current = Date.now();
     isTransitioning.current = true;
-    
+
     // Krótki cooldown po kliknięciu
     setTimeout(() => {
       isTransitioning.current = false;
@@ -261,28 +271,28 @@ function useStickyTabScroll(itemCount: number) {
   useEffect(() => {
     // Sprawdź prefers-reduced-motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
+
     if (!containerRef.current) return;
 
     const container = containerRef.current;
     const COOLDOWN_MS = prefersReducedMotion ? 100 : 400; // Dłuższy cooldown dla płynności
     const HEADER_HEIGHT = 64; // 4rem = 64px
-    
+
     const processTabChange = (direction: 'up' | 'down') => {
       const now = Date.now();
       const currentIndex = activeIndexRef.current;
-      
+
       // Sprawdź cooldown
       if (now - lastTabChangeTime.current < COOLDOWN_MS) {
         return false;
       }
-      
+
       if (isTransitioning.current) {
         return false;
       }
-      
+
       let newIndex: number;
-      
+
       if (direction === 'down') {
         if (currentIndex >= itemCount - 1) return false;
         newIndex = currentIndex + 1;
@@ -290,43 +300,43 @@ function useStickyTabScroll(itemCount: number) {
         if (currentIndex <= 0) return false;
         newIndex = currentIndex - 1;
       }
-      
+
       isTransitioning.current = true;
       lastTabChangeTime.current = now;
-      
+
       setActiveIndex(newIndex);
       activeIndexRef.current = newIndex;
-      
+
       // Reset transition flag po zakończeniu animacji
       setTimeout(() => {
         isTransitioning.current = false;
         pendingDirection.current = null;
       }, COOLDOWN_MS);
-      
+
       return true;
     };
-    
+
     const handleWheel = (e: WheelEvent) => {
       const rect = container.getBoundingClientRect();
-      
+
       // Precyzyjniejsze sprawdzenie czy sticky jest aktywny
       // Sticky jest aktywny gdy górna krawędź kontenera dotknęła headera
       // i dolna krawędź jest poniżej dolnej krawędzi viewportu
       const stickyTop = HEADER_HEIGHT;
       const isStickyActive = rect.top <= stickyTop && rect.bottom > window.innerHeight;
-      
+
       if (!isStickyActive) {
         return; // Normalny scroll
       }
 
       const currentIndex = activeIndexRef.current;
       const direction = e.deltaY > 0 ? 'down' : 'up';
-      
+
       // Pozwól wyjść z sekcji na krawędziach
       if (currentIndex === itemCount - 1 && direction === 'down') {
         return;
       }
-      
+
       if (currentIndex === 0 && direction === 'up') {
         return;
       }
@@ -334,19 +344,19 @@ function useStickyTabScroll(itemCount: number) {
       // Blokuj scroll wewnątrz sekcji
       e.preventDefault();
       e.stopPropagation();
-      
+
       // Ignoruj bardzo małe delta (np. touchpad inertia na końcu)
       if (Math.abs(e.deltaY) < 5) {
         return;
       }
-      
+
       // Użyj requestAnimationFrame dla płynności
       if (rafId.current) {
         cancelAnimationFrame(rafId.current);
       }
-      
+
       pendingDirection.current = direction;
-      
+
       rafId.current = requestAnimationFrame(() => {
         if (pendingDirection.current) {
           processTabChange(pendingDirection.current);
@@ -356,7 +366,7 @@ function useStickyTabScroll(itemCount: number) {
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
-    
+
     return () => {
       window.removeEventListener("wheel", handleWheel);
       if (rafId.current) {
@@ -375,7 +385,7 @@ function useStickyTabScroll(itemCount: number) {
 export function GridGptFeatures() {
   const { ref: revealRef, isVisible } = useReveal();
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  
+
   const { containerRef, activeIndex, handleTabClick } = useStickyTabScroll(
     gridGptFeatures.length
   );
@@ -389,11 +399,11 @@ export function GridGptFeatures() {
       className={cn("relative bg-background z-10", useRevealClass(isVisible))}
       ref={revealRef}
     >
-      {/* 
+      {/*
         Wrapper z wysokością = 100vh + (liczba tabów - 1) * 50vh
         Dzięki temu mamy miejsce na scroll, podczas gdy sticky content pozostaje na miejscu
       */}
-      <div 
+      <div
         ref={containerRef}
         className="relative"
         style={{ height: `${100 + (gridGptFeatures.length - 1) * 50}vh` }}
@@ -409,33 +419,34 @@ export function GridGptFeatures() {
           </div>
 
           {/* Main content area */}
-          <div className="flex-1 w-full border-y border-border bg-background">
-            <div className="container mx-auto px-0 md:px-0 h-full">
-              <div className="flex flex-col lg:flex-row h-full">
-                {/* Left Column: Navigation */}
-                <div className="w-full lg:w-1/3 flex flex-col bg-white">
-                  {gridGptFeatures.map((feature, index) => (
-                    <FeatureNavButton
-                      key={index}
-                      feature={feature}
-                      isActive={activeIndex === index}
-                      onClick={() => handleTabClick(index)}
-                      buttonRef={(el) => {
-                        buttonRefs.current[index] = el;
-                      }}
-                      index={index}
-                      totalCount={gridGptFeatures.length}
-                    />
-                  ))}
-                </div>
+          <div className="flex-1 w-full bg-background">
+            <div className="container mx-auto px-4 md:px-8 lg:px-16 h-full">
+              {/* Rounded container with border */}
+              <div className="h-full rounded-xl border border-border shadow-sm overflow-hidden">
+                <div className="flex flex-col lg:flex-row h-full">
+                  {/* Left Column: Navigation - szare tło */}
+                  <div className="w-full lg:w-1/3 flex flex-col bg-muted/40">
+                    {gridGptFeatures.map((feature, index) => (
+                      <FeatureNavButton
+                        key={index}
+                        feature={feature}
+                        isActive={activeIndex === index}
+                        onClick={() => handleTabClick(index)}
+                        buttonRef={(el) => {
+                          buttonRefs.current[index] = el;
+                        }}
+                      />
+                    ))}
+                  </div>
 
-                {/* Right Column: Content */}
-                <div className="w-full lg:w-2/3 bg-white text-foreground relative flex-1">
-                  <FeatureContentPanel 
-                    key={activeIndex} 
-                    feature={activeFeature}
-                    activeIndex={activeIndex}
-                  />
+                  {/* Right Column: Content - białe tło */}
+                  <div className="w-full lg:w-2/3 bg-white text-foreground relative flex-1">
+                    <FeatureContentPanel
+                      key={activeIndex}
+                      feature={activeFeature}
+                      activeIndex={activeIndex}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

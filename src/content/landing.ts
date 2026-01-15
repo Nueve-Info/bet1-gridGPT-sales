@@ -22,7 +22,7 @@ export const hero = {
   subheadline:
     "Find unique contact details and in-depth company data to make sure you always hit the most promising prospects. Automated.",
   primaryCta: "Save your spot",
-  primaryCtaHref: "#features",
+  primaryCtaHref: "#waitlist",
   secondaryCta: "Join waitlist",
   secondaryCtaHref: "#waitlist",
 };
