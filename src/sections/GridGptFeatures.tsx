@@ -64,7 +64,7 @@ function FeatureNavButton({
       ref={buttonRef}
       onClick={onClick}
       className={cn(
-        "w-full text-left px-6 md:px-8 transition-colors duration-300 group relative",
+        "w-full text-left px-6 md:px-8 py-6 lg:py-0 transition-colors duration-300 group relative",
         "flex-1 flex items-center",
         "border-b border-border/40 last:border-b-0",
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
