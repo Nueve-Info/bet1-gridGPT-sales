@@ -11,6 +11,48 @@ import { Card, CardContent } from "@/components/ui/card";
 type Feature = (typeof gridGptFeatures)[number];
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Logo Components
+// ─────────────────────────────────────────────────────────────────────────────
+
+const GlobalSystemsLogo = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+    <rect width="24" height="24" rx="4" fill="#4F46E5"/>
+    <path d="M6 8h12v2H6V8zm0 3h12v2H6v-2zm0 3h8v2H6v-2z" fill="white"/>
+    <circle cx="18" cy="6" r="1.5" fill="white"/>
+  </svg>
+);
+
+const StripeLogo = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+    <rect width="24" height="24" rx="4" fill="#635BFF"/>
+    <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z" fill="white"/>
+  </svg>
+);
+
+const NextGenDataLogo = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+    <rect width="24" height="24" rx="4" fill="#10B981"/>
+    <path d="M7 6h10v2H7V6zm0 4h10v2H7v-2zm0 4h10v2H7v-2zm-2 4h14v2H5v-2z" fill="white"/>
+    <circle cx="4" cy="4" r="1.5" fill="white"/>
+    <circle cx="20" cy="4" r="1.5" fill="white"/>
+  </svg>
+);
+
+const OpenAILogo = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+    <rect width="24" height="24" rx="4" fill="#10A37F"/>
+    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+  </svg>
+);
+
+const UserLogo = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+    <rect width="24" height="24" rx="4" fill="#6366F1"/>
+    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="white"/>
+  </svg>
+);
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Stack Cards Data (same as ValueProposition)
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -19,28 +61,33 @@ const stackCards = [
     type: "company",
     name: "Global Systems Inc.",
     detail: "$28M revenue 2025",
+    icon: "global-systems",
   },
   {
     type: "contact",
     name: "Mark Spenser",
     detail: "m.sps@lhs.com",
+    icon: "user",
   },
   {
     type: "contact",
     name: "David Kim",
     detail: "Head of Growth - Stripe",
     contact: "d.kim@stripe.com • LinkedIn",
+    icon: "stripe",
   },
   {
     type: "company",
     name: "NextGen Data",
     detail: "Market Leader 2024",
+    icon: "nextgen",
   },
   {
     type: "contact",
     name: "John Snow",
     detail: "CFO - OpenAI",
     contact: "+1 415 555 0192",
+    icon: "openai",
   },
 ];
 
@@ -158,8 +205,16 @@ function StackCards() {
                     className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors duration-700 ${iconBgClass}`}
                   >
                      {/* Ikony */}
-                     {card.type === "company" ? (
-                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                     {card.icon === "global-systems" ? (
+                       <GlobalSystemsLogo />
+                     ) : card.icon === "stripe" ? (
+                       <StripeLogo />
+                     ) : card.icon === "nextgen" ? (
+                       <NextGenDataLogo />
+                     ) : card.icon === "openai" ? (
+                       <OpenAILogo />
+                     ) : card.icon === "user" ? (
+                       <UserLogo />
                      ) : (
                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                      )}
