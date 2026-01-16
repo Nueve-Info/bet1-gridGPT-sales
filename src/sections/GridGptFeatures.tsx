@@ -11,6 +11,48 @@ import { Card, CardContent } from "@/components/ui/card";
 type Feature = (typeof gridGptFeatures)[number];
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Logo Components
+// ─────────────────────────────────────────────────────────────────────────────
+
+const GlobalSystemsLogo = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+    <rect width="24" height="24" rx="4" fill="#4F46E5"/>
+    <path d="M6 8h12v2H6V8zm0 3h12v2H6v-2zm0 3h8v2H6v-2z" fill="white"/>
+    <circle cx="18" cy="6" r="1.5" fill="white"/>
+  </svg>
+);
+
+const StripeLogo = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+    <rect width="24" height="24" rx="4" fill="#635BFF"/>
+    <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z" fill="white"/>
+  </svg>
+);
+
+const NextGenDataLogo = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+    <rect width="24" height="24" rx="4" fill="#10B981"/>
+    <path d="M7 6h10v2H7V6zm0 4h10v2H7v-2zm0 4h10v2H7v-2zm-2 4h14v2H5v-2z" fill="white"/>
+    <circle cx="4" cy="4" r="1.5" fill="white"/>
+    <circle cx="20" cy="4" r="1.5" fill="white"/>
+  </svg>
+);
+
+const OpenAILogo = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+    <rect width="24" height="24" rx="4" fill="#10A37F"/>
+    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+  </svg>
+);
+
+const UserLogo = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+    <rect width="24" height="24" rx="4" fill="#6366F1"/>
+    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="white"/>
+  </svg>
+);
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Stack Cards Data (same as ValueProposition)
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -19,28 +61,33 @@ const stackCards = [
     type: "company",
     name: "Global Systems Inc.",
     detail: "$28M revenue 2025",
+    icon: "global-systems",
   },
   {
     type: "contact",
     name: "Mark Spenser",
     detail: "m.sps@lhs.com",
+    icon: "user",
   },
   {
     type: "contact",
     name: "David Kim",
     detail: "Head of Growth - Stripe",
     contact: "d.kim@stripe.com • LinkedIn",
+    icon: "stripe",
   },
   {
     type: "company",
     name: "NextGen Data",
     detail: "Market Leader 2024",
+    icon: "nextgen",
   },
   {
     type: "contact",
     name: "John Snow",
     detail: "CFO - OpenAI",
     contact: "+1 415 555 0192",
+    icon: "openai",
   },
 ];
 
@@ -64,7 +111,7 @@ function FeatureNavButton({
       ref={buttonRef}
       onClick={onClick}
       className={cn(
-        "w-full text-left px-6 md:px-8 transition-colors duration-300 group relative",
+        "w-full text-left px-6 md:px-8 py-6 lg:py-0 transition-colors duration-300 group relative",
         "flex-1 flex items-center",
         "border-b border-border/40 last:border-b-0",
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
@@ -158,8 +205,16 @@ function StackCards() {
                     className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors duration-700 ${iconBgClass}`}
                   >
                      {/* Ikony */}
-                     {card.type === "company" ? (
-                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                     {card.icon === "global-systems" ? (
+                       <GlobalSystemsLogo />
+                     ) : card.icon === "stripe" ? (
+                       <StripeLogo />
+                     ) : card.icon === "nextgen" ? (
+                       <NextGenDataLogo />
+                     ) : card.icon === "openai" ? (
+                       <OpenAILogo />
+                     ) : card.icon === "user" ? (
+                       <UserLogo />
                      ) : (
                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                      )}
@@ -186,11 +241,11 @@ function StackCards() {
   );
 }
 
-function FeatureContentPanel({ feature, activeIndex }: { feature: Feature; activeIndex: number }) {
+function FeatureContentPanel({ feature, index }: { feature: Feature; index: number }) {
   // "data you won't find on google" jest na indeksie 2 (trzecia zakładka)
-  const isDataCardsFeature = activeIndex === 2;
+  const isDataCardsFeature = index === 2;
   // "getting smarter with each search" jest na indeksie 3 (czwarta zakładka)
-  const isFeedbackFeature = activeIndex === 3;
+  const isFeedbackFeature = index === 3;
 
   return (
     <div className="h-full flex flex-col justify-start pt-10 md:pt-14 lg:pt-16 px-6 md:px-8 lg:px-10 pb-6 space-y-10 animate-in fade-in slide-in-from-right-4 duration-500">
@@ -237,6 +292,38 @@ function FeatureContentPanel({ feature, activeIndex }: { feature: Feature; activ
   );
 }
 
+function FeatureContentPanels({
+  features,
+  activeIndex,
+  mounted,
+}: {
+  features: Feature[];
+  activeIndex: number;
+  mounted: boolean[];
+}) {
+  return (
+    <div className="relative h-full">
+      {features.map((feature, idx) => {
+        if (!mounted[idx]) return null;
+        const isActive = idx === activeIndex;
+
+        return (
+          <div
+            key={idx}
+            className={cn(
+              "absolute inset-0 transition-opacity duration-300",
+              isActive ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            )}
+            aria-hidden={!isActive}
+          >
+            <FeatureContentPanel feature={feature} index={idx} />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Hook do sticky scroll z tabami
 // ─────────────────────────────────────────────────────────────────────────────
@@ -244,6 +331,9 @@ function FeatureContentPanel({ feature, activeIndex }: { feature: Feature; activ
 function useStickyTabScroll(itemCount: number) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [mounted, setMounted] = useState<boolean[]>(() =>
+    Array.from({ length: itemCount }, (_, idx) => idx === 0)
+  );
   const activeIndexRef = useRef(0);
   const lastTabChangeTime = useRef(0);
   const isTransitioning = useRef(false);
@@ -254,10 +344,20 @@ function useStickyTabScroll(itemCount: number) {
     activeIndexRef.current = activeIndex;
   }, [activeIndex]);
 
+  const setActiveIndexAndMount = useCallback((index: number) => {
+    setActiveIndex(index);
+    setMounted((prev) => {
+      if (prev[index]) return prev;
+      const next = [...prev];
+      next[index] = true;
+      return next;
+    });
+  }, []);
+
   const handleTabClick = useCallback((index: number) => {
     if (isTransitioning.current) return;
 
-    setActiveIndex(index);
+    setActiveIndexAndMount(index);
     activeIndexRef.current = index;
     lastTabChangeTime.current = Date.now();
     isTransitioning.current = true;
@@ -266,7 +366,7 @@ function useStickyTabScroll(itemCount: number) {
     setTimeout(() => {
       isTransitioning.current = false;
     }, 300);
-  }, []);
+  }, [setActiveIndexAndMount]);
 
   useEffect(() => {
     // Sprawdź prefers-reduced-motion
@@ -304,7 +404,7 @@ function useStickyTabScroll(itemCount: number) {
       isTransitioning.current = true;
       lastTabChangeTime.current = now;
 
-      setActiveIndex(newIndex);
+      setActiveIndexAndMount(newIndex);
       activeIndexRef.current = newIndex;
 
       // Reset transition flag po zakończeniu animacji
@@ -373,9 +473,9 @@ function useStickyTabScroll(itemCount: number) {
         cancelAnimationFrame(rafId.current);
       }
     };
-  }, [itemCount]);
+  }, [itemCount, setActiveIndexAndMount]);
 
-  return { containerRef, activeIndex, handleTabClick };
+  return { containerRef, activeIndex, mounted, handleTabClick };
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -386,11 +486,9 @@ export function GridGptFeatures() {
   const { ref: revealRef, isVisible } = useReveal();
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  const { containerRef, activeIndex, handleTabClick } = useStickyTabScroll(
+  const { containerRef, activeIndex, mounted, handleTabClick } = useStickyTabScroll(
     gridGptFeatures.length
   );
-
-  const activeFeature = gridGptFeatures[activeIndex];
 
   return (
     <section
@@ -441,10 +539,10 @@ export function GridGptFeatures() {
 
                   {/* Right Column: Content - białe tło */}
                   <div className="w-full lg:w-2/3 bg-white text-foreground relative flex-1">
-                    <FeatureContentPanel
-                      key={activeIndex}
-                      feature={activeFeature}
+                    <FeatureContentPanels
+                      features={gridGptFeatures}
                       activeIndex={activeIndex}
+                      mounted={mounted}
                     />
                   </div>
                 </div>
