@@ -134,48 +134,49 @@ export const testimonials = {
       quote:
         "I'm impressed 😎\n\nSystematized knowledge that can be immediately implemented in daily work, a step-by-step process.\n\nI went through the entire week's material in one evening and can't wait for the next lessons!\n\nFor me, the best part was breaking down headlines into their components, explaining how to understand them, and presenting the 'letter method' 🔥🔥🔥",
       author: "Kinga",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=faces",
     },
     {
       quote:
         "God, great, this is exactly what I don't feel good about, it's great that something like this was created.",
       author: "Sławek",
-
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces",
     },
     {
       quote:
         "I thought I was already creating good landing pages, but this course made them turbo mega good. 👉 What I remember most is a different perspective on the design process. It completely changed my way of looking at it. Now, creating ideas for a concept goes much faster than before. In addition, a case study taken from life - awesome. I recommend it to everyone. 🔥",
       author: "Wiktoria Wiśniewska",
-
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=faces",
     },
     {
       quote:
         "Overall, thanks for this dose of knowledge, valuable time and I am convinced that this is a topic for me to explore further 🥰",
       author: "Kasia Cicho",
-
+      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=faces",
     },
     {
       quote:
         "Super practical — helps you avoid mistakes. Top quality, better than any program I've joined before.",
       author: "Martyna",
-
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=faces",
     },
     {
       quote:
         "I also want to add — I forgot to mention — that there's a really good energy and sense of humor in all of this, which makes it easier and more enjoyable to absorb.",
       author: "Klaudi",
-
+      avatar: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=150&h=150&fit=crop&crop=faces",
     },
     {
       quote:
         "Loved how everything was explained clearly and practically — perfect program even for beginners.",
       author: "Asia",
-
+      avatar: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=150&h=150&fit=crop&crop=faces",
     },
     {
       quote:
         "Exactly what I needed — clear structure, great examples, and everything to start taking action right away.",
       author: "Tomek Sawicki",
-
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=faces",
     },
   ],
 };

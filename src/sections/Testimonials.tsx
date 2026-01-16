@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { testimonials } from "@/content/landing";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
-import { User } from "lucide-react";
 
 export function Testimonials() {
   const { ref, isVisible } = useReveal();
@@ -64,14 +63,12 @@ export function Testimonials() {
                     <CardContent className="p-6 flex flex-col h-full">
                       {/* Author - nad tekstem */}
                       <div className="mb-4 flex items-center gap-3 shrink-0">
-                        {/* Avatar Icon */}
-                        <div
-                          className="w-12 h-12 rounded-full shrink-0 flex items-center justify-center bg-gradient-to-r from-[#F1F7FD] to-[#D9F4E6]"
-                          role="img"
-                          aria-label={`${testimonial.author}'s avatar`}
-                        >
-                          <User className="w-6 h-6 text-muted-foreground" />
-                        </div>
+                        {/* Avatar Image */}
+                        <img
+                          src={testimonial.avatar}
+                          alt={`${testimonial.author}'s avatar`}
+                          className="w-12 h-12 rounded-full shrink-0 object-cover"
+                        />
                         <div>
                           <div className="font-medium text-base">
                             {testimonial.author}
