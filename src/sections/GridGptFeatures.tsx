@@ -241,11 +241,11 @@ function StackCards() {
   );
 }
 
-function FeatureContentPanel({ feature, activeIndex }: { feature: Feature; activeIndex: number }) {
+function FeatureContentPanel({ feature, index }: { feature: Feature; index: number }) {
   // "data you won't find on google" jest na indeksie 2 (trzecia zakładka)
-  const isDataCardsFeature = activeIndex === 2;
+  const isDataCardsFeature = index === 2;
   // "getting smarter with each search" jest na indeksie 3 (czwarta zakładka)
-  const isFeedbackFeature = activeIndex === 3;
+  const isFeedbackFeature = index === 3;
 
   return (
     <div className="h-full flex flex-col justify-start pt-10 md:pt-14 lg:pt-16 px-6 md:px-8 lg:px-10 pb-6 space-y-10 animate-in fade-in slide-in-from-right-4 duration-500">
@@ -292,6 +292,38 @@ function FeatureContentPanel({ feature, activeIndex }: { feature: Feature; activ
   );
 }
 
+function FeatureContentPanels({
+  features,
+  activeIndex,
+  mounted,
+}: {
+  features: Feature[];
+  activeIndex: number;
+  mounted: boolean[];
+}) {
+  return (
+    <div className="relative h-full">
+      {features.map((feature, idx) => {
+        if (!mounted[idx]) return null;
+        const isActive = idx === activeIndex;
+
+        return (
+          <div
+            key={idx}
+            className={cn(
+              "absolute inset-0 transition-opacity duration-300",
+              isActive ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            )}
+            aria-hidden={!isActive}
+          >
+            <FeatureContentPanel feature={feature} index={idx} />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Hook do sticky scroll z tabami
 // ─────────────────────────────────────────────────────────────────────────────
@@ -299,6 +331,9 @@ function FeatureContentPanel({ feature, activeIndex }: { feature: Feature; activ
 function useStickyTabScroll(itemCount: number) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [mounted, setMounted] = useState<boolean[]>(() =>
+    Array.from({ length: itemCount }, (_, idx) => idx === 0)
+  );
   const activeIndexRef = useRef(0);
   const lastTabChangeTime = useRef(0);
   const isTransitioning = useRef(false);
@@ -309,10 +344,20 @@ function useStickyTabScroll(itemCount: number) {
     activeIndexRef.current = activeIndex;
   }, [activeIndex]);
 
+  const setActiveIndexAndMount = useCallback((index: number) => {
+    setActiveIndex(index);
+    setMounted((prev) => {
+      if (prev[index]) return prev;
+      const next = [...prev];
+      next[index] = true;
+      return next;
+    });
+  }, []);
+
   const handleTabClick = useCallback((index: number) => {
     if (isTransitioning.current) return;
 
-    setActiveIndex(index);
+    setActiveIndexAndMount(index);
     activeIndexRef.current = index;
     lastTabChangeTime.current = Date.now();
     isTransitioning.current = true;
@@ -321,7 +366,7 @@ function useStickyTabScroll(itemCount: number) {
     setTimeout(() => {
       isTransitioning.current = false;
     }, 300);
-  }, []);
+  }, [setActiveIndexAndMount]);
 
   useEffect(() => {
     // Sprawdź prefers-reduced-motion
@@ -359,7 +404,7 @@ function useStickyTabScroll(itemCount: number) {
       isTransitioning.current = true;
       lastTabChangeTime.current = now;
 
-      setActiveIndex(newIndex);
+      setActiveIndexAndMount(newIndex);
       activeIndexRef.current = newIndex;
 
       // Reset transition flag po zakończeniu animacji
@@ -428,9 +473,9 @@ function useStickyTabScroll(itemCount: number) {
         cancelAnimationFrame(rafId.current);
       }
     };
-  }, [itemCount]);
+  }, [itemCount, setActiveIndexAndMount]);
 
-  return { containerRef, activeIndex, handleTabClick };
+  return { containerRef, activeIndex, mounted, handleTabClick };
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -441,11 +486,9 @@ export function GridGptFeatures() {
   const { ref: revealRef, isVisible } = useReveal();
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  const { containerRef, activeIndex, handleTabClick } = useStickyTabScroll(
+  const { containerRef, activeIndex, mounted, handleTabClick } = useStickyTabScroll(
     gridGptFeatures.length
   );
-
-  const activeFeature = gridGptFeatures[activeIndex];
 
   return (
     <section
@@ -496,10 +539,10 @@ export function GridGptFeatures() {
 
                   {/* Right Column: Content - białe tło */}
                   <div className="w-full lg:w-2/3 bg-white text-foreground relative flex-1">
-                    <FeatureContentPanel
-                      key={activeIndex}
-                      feature={activeFeature}
+                    <FeatureContentPanels
+                      features={gridGptFeatures}
                       activeIndex={activeIndex}
+                      mounted={mounted}
                     />
                   </div>
                 </div>
