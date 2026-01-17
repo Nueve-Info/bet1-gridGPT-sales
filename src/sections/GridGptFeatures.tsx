@@ -339,6 +339,21 @@ function useStickyTabScroll(itemCount: number) {
   const isTransitioning = useRef(false);
   const pendingDirection = useRef<'up' | 'down' | null>(null);
   const rafId = useRef<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile on mount
+  useEffect(() => {
+    const checkMobile = () => {
+      // Check for touch capability and screen width
+      const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const isSmallScreen = window.innerWidth < 1024; // lg breakpoint
+      setIsMobile(hasTouchScreen && isSmallScreen);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     activeIndexRef.current = activeIndex;
@@ -368,21 +383,22 @@ function useStickyTabScroll(itemCount: number) {
     }, 300);
   }, [setActiveIndexAndMount]);
 
+  // Desktop: wheel-based tab switching
   useEffect(() => {
-    // Sprawdź prefers-reduced-motion
+    if (isMobile) return; // Skip wheel handling on mobile
+    
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!containerRef.current) return;
 
     const container = containerRef.current;
-    const COOLDOWN_MS = prefersReducedMotion ? 100 : 400; // Dłuższy cooldown dla płynności
-    const HEADER_HEIGHT = 64; // 4rem = 64px
+    const COOLDOWN_MS = prefersReducedMotion ? 100 : 400;
+    const HEADER_HEIGHT = 64;
 
     const processTabChange = (direction: 'up' | 'down') => {
       const now = Date.now();
       const currentIndex = activeIndexRef.current;
 
-      // Sprawdź cooldown
       if (now - lastTabChangeTime.current < COOLDOWN_MS) {
         return false;
       }
@@ -407,7 +423,6 @@ function useStickyTabScroll(itemCount: number) {
       setActiveIndexAndMount(newIndex);
       activeIndexRef.current = newIndex;
 
-      // Reset transition flag po zakończeniu animacji
       setTimeout(() => {
         isTransitioning.current = false;
         pendingDirection.current = null;
@@ -418,21 +433,16 @@ function useStickyTabScroll(itemCount: number) {
 
     const handleWheel = (e: WheelEvent) => {
       const rect = container.getBoundingClientRect();
-
-      // Precyzyjniejsze sprawdzenie czy sticky jest aktywny
-      // Sticky jest aktywny gdy górna krawędź kontenera dotknęła headera
-      // i dolna krawędź jest poniżej dolnej krawędzi viewportu
       const stickyTop = HEADER_HEIGHT;
       const isStickyActive = rect.top <= stickyTop && rect.bottom > window.innerHeight;
 
       if (!isStickyActive) {
-        return; // Normalny scroll
+        return;
       }
 
       const currentIndex = activeIndexRef.current;
       const direction = e.deltaY > 0 ? 'down' : 'up';
 
-      // Pozwól wyjść z sekcji na krawędziach
       if (currentIndex === itemCount - 1 && direction === 'down') {
         return;
       }
@@ -441,16 +451,13 @@ function useStickyTabScroll(itemCount: number) {
         return;
       }
 
-      // Blokuj scroll wewnątrz sekcji
       e.preventDefault();
       e.stopPropagation();
 
-      // Ignoruj bardzo małe delta (np. touchpad inertia na końcu)
       if (Math.abs(e.deltaY) < 5) {
         return;
       }
 
-      // Użyj requestAnimationFrame dla płynności
       if (rafId.current) {
         cancelAnimationFrame(rafId.current);
       }
@@ -473,7 +480,79 @@ function useStickyTabScroll(itemCount: number) {
         cancelAnimationFrame(rafId.current);
       }
     };
-  }, [itemCount, setActiveIndexAndMount]);
+  }, [itemCount, setActiveIndexAndMount, isMobile]);
+
+  // Mobile: scroll-position based tab switching
+  useEffect(() => {
+    if (!isMobile) return; // Only run on mobile
+    if (!containerRef.current) return;
+
+    const container = containerRef.current;
+    const HEADER_HEIGHT = 64;
+
+    const handleScroll = () => {
+      const rect = container.getBoundingClientRect();
+      
+      // Check if we're in the sticky zone
+      const stickyTop = HEADER_HEIGHT;
+      const isStickyActive = rect.top <= stickyTop && rect.bottom > window.innerHeight;
+      
+      if (!isStickyActive) {
+        // If above the section, ensure first tab
+        if (rect.top > stickyTop) {
+          if (activeIndexRef.current !== 0) {
+            setActiveIndexAndMount(0);
+            activeIndexRef.current = 0;
+          }
+        }
+        // If below the section, ensure last tab
+        if (rect.bottom <= window.innerHeight) {
+          if (activeIndexRef.current !== itemCount - 1) {
+            setActiveIndexAndMount(itemCount - 1);
+            activeIndexRef.current = itemCount - 1;
+          }
+        }
+        return;
+      }
+
+      // Calculate scroll progress within the container
+      // Container starts when rect.top = HEADER_HEIGHT (or less)
+      // Container ends when rect.bottom = window.innerHeight
+      
+      // How much we've scrolled into the container
+      const containerHeight = rect.height;
+      const viewportHeight = window.innerHeight - HEADER_HEIGHT;
+      const scrollableDistance = containerHeight - viewportHeight;
+      
+      // Current scroll position within the container (0 to scrollableDistance)
+      const scrolledAmount = stickyTop - rect.top;
+      
+      // Progress from 0 to 1
+      const progress = Math.max(0, Math.min(1, scrolledAmount / scrollableDistance));
+      
+      // Map progress to tab index
+      // We want equal distribution across tabs
+      const newIndex = Math.min(
+        itemCount - 1,
+        Math.floor(progress * itemCount)
+      );
+      
+      if (newIndex !== activeIndexRef.current) {
+        setActiveIndexAndMount(newIndex);
+        activeIndexRef.current = newIndex;
+      }
+    };
+
+    // Use passive scroll listener for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Initial check
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [itemCount, setActiveIndexAndMount, isMobile]);
 
   return { containerRef, activeIndex, mounted, handleTabClick };
 }
