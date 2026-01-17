@@ -3,8 +3,6 @@ import { hero } from "@/content/landing";
 import { track } from "@/lib/analytics";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
 import { useEffect } from "react";
-import Lottie from "lottie-react";
-import animationData from "../../assets/hero-animation.json";
 
 export function Hero() {
   const { ref, isVisible } = useReveal();
@@ -110,13 +108,26 @@ export function Hero() {
             }`}
           >
             <div className="relative rounded-xl border bg-background/50 p-1 shadow-2xl backdrop-blur-sm ring-1 ring-border/50">
-              <Lottie
-                animationData={animationData}
-                loop={true}
-                autoplay={true}
-              />
               {/* Decorative glow with animation */}
               <div className="absolute -inset-4 -z-10 bg-gradient-to-tr from-primary/10 to-secondary/10 opacity-60 blur-2xl rounded-[2rem] animate-glow-pulse" />
+              {/* Vimeo Video */}
+              <div style={{ padding: "64.69% 0 0 0", position: "relative" }}>
+                <iframe
+                  src="https://player.vimeo.com/video/1155567901?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1"
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  title="hero-animation"
+                  className="rounded-xl"
+                />
+              </div>
             </div>
           </div>
         </div>
