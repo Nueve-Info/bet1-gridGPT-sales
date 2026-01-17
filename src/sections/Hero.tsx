@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { hero } from "@/content/landing";
 import { track } from "@/lib/analytics";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
-import { useEffect } from "react";
 
 export function Hero() {
   const { ref, isVisible } = useReveal();
@@ -10,17 +9,6 @@ export function Hero() {
   const handlePrimaryClick = () => {
     track("cta:hero_primary");
   };
-
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://player.vimeo.com/api/player.js";
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
 
   return (
     <section

@@ -1,20 +1,8 @@
 import { pipeline } from "@/content/landing";
 import { useReveal, useRevealClass } from "@/hooks/useReveal";
-import { useEffect } from "react";
 
 export function Pipeline() {
   const { ref, isVisible } = useReveal();
-
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://player.vimeo.com/api/player.js";
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
 
   return (
     <section
